@@ -6,12 +6,16 @@ class uploaderMain extends CW_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->init();
-		$this->output->enable_profiler(TRUE);
+		$this->_init();
 	}
 
-	public function init()
+	private function _init()
 	{
+		//检查用户是否为uploader
+		if ($this->session->userdata('type') != 'uploader')
+		{
+			show_error('无权限做此操作!');
+		}
 		//取得area列表
 		$tmpRes = $this->db->query("SELECT * FROM area");
 		$areaArray = $tmpRes->result_array();
@@ -38,7 +42,7 @@ class uploaderMain extends CW_Controller
 		$this->smarty->assign('markNameList', $markNameList);
 	}
 
-	public function getUploadedFile()
+	private function _getUploadedFile()
 	{
 		//取得已上传文件列表
 		$tmpRes = $this->db->query("SELECT a.id course, a.name courseName, a.area, b.name areaName FROM course a LEFT JOIN area b ON a.area = b.id WHERE a.uploader = ? ORDER BY a.area, courseName", array($this->session->userdata['userId']));
@@ -53,17 +57,22 @@ class uploaderMain extends CW_Controller
 
 	public function index()
 	{
-		$this->getUploadedFile();
+		$this->_getUploadedFile();
 		$this->smarty->assign('type', 'create');
 		$this->smarty->display('uploaderMain.tpl');
 	}
 
 	public function update($course)
 	{
-		$this->getUploadedFile();
+		$this->_getUploadedFile();
 		//取得course信息
-		$tmpRes = $this->db->query("SELECT id course, name, area, cost, introduction, list FROM course WHERE id = ?", array($course));
+		$tmpRes = $this->db->query("SELECT id course, name, area, cost, introduction, list, uploader FROM course WHERE id = ?", array($course));
 		$courseInfo = $tmpRes->first_row('array');
+		//检查当前用户是否是文件拥有者
+		if ($courseInfo['uploader'] != $this->session->userdata('userId'))
+		{
+			show_error('无权限做此操作!');
+		}
 		//取得course mark信息
 		$tmpRes = $this->db->query("SELECT mark FROM courseToMark WHERE course = ?", array($course));
 		$tmpMarkArray = $tmpRes->result_array();
@@ -80,8 +89,15 @@ class uploaderMain extends CW_Controller
 
 	public function delete($course)
 	{
+		//取得course信息
+		$tmpRes = $this->db->query("SELECT uploader FROM course WHERE id = ?", array($course));
+		//检查当前用户是否是文件拥有者
+		if ($tmpRes->first_row()->uploader != $this->session->userdata('userId'))
+		{
+			show_error('无权限做此操作!');
+		}
 		$this->smarty->assign('type', 'create');
-		$this->getUploadedFile();
+		$this->_getUploadedFile();
 		$this->db->trans_start();
 		$tmpRes = $this->db->query("DELETE FROM courseToMark WHERE course = ?", array($course));
 		if ($tmpRes)
@@ -91,7 +107,7 @@ class uploaderMain extends CW_Controller
 			if ($tmpRes)
 			{
 				$this->db->trans_commit();
-				$this->getUploadedFile();
+				$this->_getUploadedFile();
 				$this->_return("文件删除成功", "ok1");
 			}
 			else
@@ -111,7 +127,7 @@ class uploaderMain extends CW_Controller
 
 	public function uploadSubmit()
 	{
-		$this->getUploadedFile();
+		$this->_getUploadedFile();
 		$this->smarty->assign('type', $this->input->post('type'));
 		$this->lang->load('form_validation', 'chinese');
 		//检查数据格式
@@ -175,7 +191,7 @@ class uploaderMain extends CW_Controller
 						$this->_return("上传文件信息失败,请重试!", "error1");
 					}
 					$this->db->trans_commit();
-					$this->getUploadedFile();
+					$this->_getUploadedFile();
 					$_POST = NULL;
 					$this->_return("文件上传成功!", "ok1");
 				}
@@ -225,7 +241,7 @@ class uploaderMain extends CW_Controller
 					$this->_return("修改文件信息失败,请重试!", "error1");
 				}
 				$this->db->trans_commit();
-				$this->getUploadedFile();
+				$this->_getUploadedFile();
 				$this->smarty->assign('type', 'create');
 				$_POST = NULL;
 				$this->_return("修改文件成功!", "ok1");
@@ -305,7 +321,7 @@ class uploaderMain extends CW_Controller
 		}
 	}
 
-	public function _return($str, $css)
+	private function _return($str, $css)
 	{
 		$this->smarty->assign('msg', '<span class="'.$css.'">'.$str.'</span>');
 		$this->smarty->display('uploaderMain.tpl');

@@ -45,7 +45,7 @@ class Login extends CW_Controller
 	public function validateLogin()
 	{
 		$var = '';
-		if ($this->authenticate($var))
+		if ($this->_authenticate($var))
 		{
 			//登录成功
 			$this->input->set_cookie('type', $this->input->post('type'), 3600 * 24 * 30);
@@ -140,7 +140,7 @@ class Login extends CW_Controller
 		}
 	}
 
-	public function authenticate(&$var)
+	private function _authenticate(&$var)
 	{
 		$this->lang->load('form_validation', 'chinese');
 		//check data format

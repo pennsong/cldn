@@ -12,52 +12,64 @@
 			div.locGeneralErrorInfo {
 				padding-top: 7px;
 				padding-bottom: 7px;
-				height: 14px;
 			}
 			div.locUserType {
 				height: 19px;
 			}
 		</style>
 		<script>
-			$(document).ready(function() {
-				$(".locDefaultStr").click(function() {
+			$(document).ready(function()
+			{
+				$(".locDefaultStr").click(function()
+				{
 					$(this).prev(".locDefaultStrContainer").focus();
 				});
-				$(".locDefaultStrContainer").focus(function() {
+				$(".locDefaultStrContainer").focus(function()
+				{
 					$(this).next(".locDefaultStr").hide();
 				});
-				$(".locDefaultStrContainer").blur(function() {
-					if ($(this).val() == "") {
+				$(".locDefaultStrContainer").blur(function()
+				{
+					if ($(this).val() == "")
+					{
 						$(this).next(".locDefaultStr").show();
 					}
 				});
 				$(".locDefaultStrContainer").blur();
-				$("#locLoginForm").validationEngine('attach', {
+				$("#locLoginForm").validationEngine('attach',
+				{
 					promptPosition : "centerRight",
 					autoPositionUpdate : "true"
 				});
 			});
-			function checkUserName(field, rules, i, options) {
+			function checkUserName(field, rules, i, options)
+			{
 				var err = new Array();
 				var reg1 = /^[_\.].*/;
 				var reg2 = /.*[_\.]$/;
 				var str = field.val();
-				if (reg1.test(str) || reg2.test(str)) {
+				if (reg1.test(str) || reg2.test(str))
+				{
 					err.push('* 不能以下划线或点开始或结束！');
 				}
-				if ((countOccurrences(str, '.') + countOccurrences(str, '_')) > 1) {
+				if ((countOccurrences(str, '.') + countOccurrences(str, '_')) > 1)
+				{
 					err.push('* 一个用户名仅允许包含一个下划线或一个点！');
 				}
-				if (err.length > 0) {
+				if (err.length > 0)
+				{
 					return err.join("<br>");
 				}
 			}
 
-			function countOccurrences(str, character) {
+			function countOccurrences(str, character)
+			{
 				var i = 0;
 				var count = 0;
-				for ( i = 0; i < str.length; i++) {
-					if (str.charAt(i) == character) {
+				for ( i = 0; i < str.length; i++)
+				{
+					if (str.charAt(i) == character)
+					{
 						count++;
 					}
 				}
@@ -119,9 +131,7 @@
 						</button>
 					</div>
 					<div class="span-10 locGeneralErrorInfo">
-						<div class="error1">
-							 {$loginErrorInfo|default:''}
-						</div>
+						<span class="error1">{$loginErrorInfo|default:''}</span>
 					</div>
 				</div>
 			</form>
