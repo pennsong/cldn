@@ -46,7 +46,7 @@ class CW_Controller extends CI_Controller
 		}
 		else if ($this->session->userdata('userName') && $this->session->userdata('type'))
 		{
-			if ($this->session->userdata('type') == 'reader')
+			if ($this->session->userdata('type') == 'user')
 			{
 				$tmpRes = $this->db->query("SELECT * FROM user WHERE userName='{$this->session->userdata('userName')}';");
 				if ($tmpRes && $tmpRes->num_rows > 0)

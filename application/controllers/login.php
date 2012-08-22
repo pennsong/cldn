@@ -12,6 +12,7 @@ class Login extends CW_Controller
 
 	public function index()
 	{
+		$this->session->sess_destroy();
 		//set user type
 		$this->smarty->assign('typeId', array(
 			'1',
@@ -36,6 +37,7 @@ class Login extends CW_Controller
 
 	public function login2($userName = null, $password = null, $type = 1)
 	{
+		$this->session->sess_destroy();
 		$_POST['type'] = $type;
 		$_POST['userName'] = $userName;
 		$_POST['password'] = $password;
