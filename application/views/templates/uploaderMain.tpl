@@ -9,6 +9,9 @@
 	}
 </style>
 <!--{/block}-->
+<!--{block name=subScript}-->
+<script type="text/javascript" src="{base_url()}resource/xheditor/xheditor-1.1.14-zh-cn.min.js"></script>
+<!--{/block}-->
 <!--{block name=subBody}-->
 <div class="prepend-1 span-38">
 	<div class="span-38">
@@ -50,13 +53,13 @@
 			概述:
 		</div>
 		<div class="prepend-1 span-37">
-			<textarea name="introduction">{$smarty.post.introduction|default:''}</textarea>
+			<textarea class="xheditor" name="introduction">{$smarty.post.introduction|default:''}</textarea>
 		</div>
 		<div class="span-38">
 			目录:
 		</div>
 		<div class="prepend-1 span-37">
-			<textarea name="list">{$smarty.post.list|default:''}</textarea>
+			<textarea class="xheditor" name="list">{$smarty.post.list|default:''}</textarea>
 		</div>
 		<div class="prepend-17 span-4">
 			<input type="submit" value="上传" />
@@ -79,7 +82,7 @@
 			</div>
 			<!--{/foreach}-->
 		</div>
-		<div class="span-7">
+		<div class="span-7 overflowHidden">
 			{$uploadedFile['courseName']}
 		</div>
 		<div class="span-4">
