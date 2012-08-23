@@ -164,6 +164,7 @@ class Login extends CW_Controller
 						$this->session->set_userdata('userName', strtolower($this->input->post('userName')));
 						$this->session->set_userdata('userId', $tmpArr['id']);
 						$this->session->set_userdata('type', 'user');
+						$this->session->set_userdata('point', $tmpArr['point']);						
 						return TRUE;
 					}
 					else

@@ -122,6 +122,7 @@ class userMain extends CW_Controller
 					if ($tmpRes)
 					{
 						$this->db->trans_commit();
+						$this->session->set_userdata('point', ($point - $cost));
 						$this->_return("购买成功!", ".ok1", $sortType);
 					}
 					else
