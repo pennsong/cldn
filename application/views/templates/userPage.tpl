@@ -4,9 +4,9 @@
 <!--{/block}-->
 <!--{/block}-->
 <!--{block name=body}-->
-<div class="span-64 last">
+<div class="span-64 last pageTop">
 	<div class="span-45">
-		<img class="" src="{base_url()}resource/img/logo.png"/>
+		<img class="logo" src="{base_url()}resource/img/logo.png"/>
 	</div>
 	<div class="span-16">
 		欢迎您,普通用户:{$CI->session->userdata('userName')}|剩余积分:{$CI->session->userdata('point')}

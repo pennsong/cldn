@@ -16,7 +16,7 @@
 		<script></script>
 		<!--{/block}-->
 	</head>
-	<body>
+	<body class="cldn">
 		<div class="container">
 			<!--{block name=body}-->
 			<!--{/block}-->
