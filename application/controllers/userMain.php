@@ -166,7 +166,7 @@ class userMain extends CW_Controller
 	private function _getBoughtCourse()
 	{
 		//取得已购买课程列表
-		$tmpRes = $this->db->query("SELECT b.id courseId, b.name courseName, c.id areaId, c.name areaName, a.expiration FROM userBuyCourse a JOIN course b on a.course = b.id JOIN area c ON b.area = c.id WHERE user = ? AND a.expiration >= DATE(NOW()) ORDER BY c.name", array($this->session->userdata['userId']));
+		$tmpRes = $this->db->query("SELECT b.id courseId, b.name courseName, b.path, c.id areaId, c.name areaName, a.expiration FROM userBuyCourse a JOIN course b on a.course = b.id JOIN area c ON b.area = c.id WHERE user = ? AND a.expiration >= DATE(NOW()) ORDER BY c.name", array($this->session->userdata['userId']));
 		$courseArray = $tmpRes->result_array();
 		foreach ($courseArray as &$course)
 		{

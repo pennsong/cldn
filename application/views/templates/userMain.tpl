@@ -113,7 +113,7 @@
 			{$course['expiration']}
 		</div>
 		<div class="span-7">
-			<a href="{base_url()}resource/php/split_document.php?doc={$course['courseName']}" target="_blank">{$course['courseName']}</a>
+			<a href="{base_url()}resource/php/split_document.php?doc={$course['path']}" target="_blank">{$course['courseName']}</a>
 		</div>
 	</div>
 	<!--{/foreach}-->

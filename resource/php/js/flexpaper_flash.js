@@ -384,9 +384,8 @@ function onDocumentPrinted(){
 				*/
 				var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://");
 				
-				root.innerHTML = "<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
-										+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>";
-											
+root.innerHTML = "<img src='" + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' />";
+                root.href = "http://www.adobe.com/go/getflashplayer";					
 				if (root.tagName == 'A') {	
 					root.onclick = function() {
 						location.href = URL;
