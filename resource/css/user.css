@@ -6,9 +6,8 @@ body.cldn {
 	font-size: 13px;
 }
 
-div.rightBorder
-{
-	border-right: 1px dashed #c0beb5;	
+div.rightBorder {
+	border-right: 1px dashed #c0beb5;
 }
 span.cldnH1 {
 	font-family: 'times new roman';
@@ -85,10 +84,10 @@ a.normal:hover {
 	padding-top: 4px;
 	padding-bottom: 2px;
 	position: absolute;
-	top: 0px;
-	left: 2px;
-	font-size: 14px;
-	line-height: 14px;
+	top: 2px;
+	left: 4px;
+	font-size: 11px;
+	line-height: 11px;
 	height: 14px;
 	color: #a1a1a1;
 	z-index: 200;
@@ -155,24 +154,12 @@ a.normal:hover {
 	display: inline-block;
 }
 .input1 {
-	height: 14px;
-	line-height: 14px;
-	font-size: 14px;
-	font-family: 'Helvetica Neue', Arial, Helvetica, 'Liberation Sans', FreeSans, sans-serif;
-	color: black;
+
 }
 .button1 {
-	margin: 0px;
-	border-width: 2px;
-	padding: 2px;
-	height: 28px;
-	width: 100px;
-	line-height: 14px;
-	font-size: 14px;
-	font-family: 'Helvetica Neue', Arial, Helvetica, 'Liberation Sans', FreeSans, sans-serif;
-	font-weight: bold;
-	color: black;
+
 }
+
 .link1 {
 	height: 14px;
 	line-height: 14px;
@@ -188,12 +175,9 @@ a.normal:hover {
 	color: white;
 }
 .label1 {
-	height: 16px;
-	line-height: 16px;
-	font-size: 16px;
-	font-family: 'Helvetica Neue', Arial, Helvetica, 'Liberation Sans', FreeSans, sans-serif;
-	color: black;
-	display: inline-block;
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 11px;
+	color: #666666;
 }
 .label2 {
 	height: 16px;
@@ -212,8 +196,8 @@ a.normal:hover {
 	display: inline-block;
 }
 .error1 {
-	height: 14px;
-	font-size: 14px;
+	height: 11px;
+	font-size: 11px;
 	font-family: 'Helvetica Neue', Arial, Helvetica, 'Liberation Sans', FreeSans, sans-serif;
 	font-weight: bold;
 	color: red;

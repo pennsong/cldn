@@ -370,7 +370,6 @@ function onDocumentPrinted(){
 			});	
 			
 		} else {
-			
 			// fail #2.1 custom content inside container
 			if (!root.innerHTML.replace(/\s/g, '')) {
 				/* root.innerHTML = 
@@ -382,8 +381,7 @@ function onDocumentPrinted(){
 					(root.tagName == 'A' ? "<p>Click here to download latest version</p>" : 
 						"<p>Download latest version from <a href='" + URL + "'>here</a></p>");
 				*/
-				var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://");
-				
+				var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://");	
 root.innerHTML = "<img src='" + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' />";
                 root.href = "http://www.adobe.com/go/getflashplayer";					
 				if (root.tagName == 'A') {	

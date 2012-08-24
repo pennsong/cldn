@@ -7,11 +7,11 @@
 		<title>登录</title>
 		<style type="text/css" media="screen">
 			div.locUserNameDefaultStr {
-				left: 2px;
+				left: 4px;
 			}
 			div.locGeneralErrorInfo {
-				padding-top: 7px;
-				padding-bottom: 7px;
+				padding-top: 1px;
+				padding-bottom: 1px;
 			}
 			div.locUserType {
 				height: 19px;
@@ -77,14 +77,14 @@
 			}
 		</script>
 	</head>
-	<body>
+	<body class="cldn">
 		<div class="container">
 			<div class="span-64 last">
-				  <img class="logo" src="{base_url()}resource/img/logo.png"/>
+				  <img class="" src="{base_url()}resource/img/logo.png"/>
 			</div>
 			<div class="clear prepend-19 last append-bottom20">
-				<div class="head1">
-					欢迎来到CLDN
+				<div>
+					<span class="cldnH1">欢迎来到CLDN</span>
 				</div>
 			</div>
 			<form id="locLoginForm" action="{site_url('login/validateLogin')}" method="post">
@@ -120,12 +120,12 @@
 					</div>
 				</div>
 				<div class="clear prepend-19 append-bottom20 locUserType">
-					<div class="span-10 label1">
+					<div class="span-15 label1">
 						{html_radios name='type' values=$typeId output=$typeName labels=FALSE selected=$type|default:1}
 					</div>
 				</div>
 				<div class="clear prepend-19">
-					<div class="inline span-7">
+					<div class="inline span-3">
 						<button id="loginButton" class="button1" type="submit">
 							登录
 						</button>
