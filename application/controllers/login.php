@@ -16,11 +16,13 @@ class Login extends CW_Controller
 		//set user type
 		$this->smarty->assign('typeId', array(
 			'1',
-			'2'
+			'2',
+			'3'
 		));
 		$this->smarty->assign('typeName', array(
 			'普通用户',
-			'管理员'
+			'管理员',
+			'超级管理员'
 		));
 		if ($this->input->cookie('type'))
 		{
@@ -55,7 +57,7 @@ class Login extends CW_Controller
 			{
 				redirect(base_url().'index.php/userMain');
 			}
-			else if ($this->session->userdata('type') == 'uploader')
+			else if ($this->session->userdata('type') == 'uploader' || $this->session->userdata('type') == 'admin')
 			{
 				redirect(base_url().'index.php/uploaderMain');
 			}
@@ -164,7 +166,7 @@ class Login extends CW_Controller
 						$this->session->set_userdata('userName', strtolower($this->input->post('userName')));
 						$this->session->set_userdata('userId', $tmpArr['id']);
 						$this->session->set_userdata('type', 'user');
-						$this->session->set_userdata('point', $tmpArr['point']);						
+						$this->session->set_userdata('point', $tmpArr['point']);
 						return TRUE;
 					}
 					else
@@ -201,6 +203,42 @@ class Login extends CW_Controller
 						$this->session->set_userdata('userName', strtolower($this->input->post('userName')));
 						$this->session->set_userdata('userId', $tmpArr['id']);
 						$this->session->set_userdata('type', 'uploader');
+						return TRUE;
+					}
+					else
+					{
+						//密码错误
+						$var = "*密码错误，请仔细检查";
+						return FALSE;
+					}
+				}
+				else
+				{
+					//用户名不存在
+					$var = "*无此用户,请重新输入";
+					return FALSE;
+				}
+			}
+			else
+			{
+				//查询失败
+				$var = "*系统繁忙，请稍后尝试进入";
+				return FALSE;
+			}
+		}
+		else if ($this->input->post('type') == 3)
+		{
+			$tmpRes = $this->db->query('SELECT * FROM admin WHERE userName = ?', strtolower($this->input->post('userName')));
+			if ($tmpRes)
+			{
+				if ($tmpRes->num_rows() > 0)
+				{
+					$tmpArr = $tmpRes->first_row('array');
+					if ($tmpArr['password'] == strtolower($this->input->post('password')))
+					{
+						$this->session->set_userdata('userName', strtolower($this->input->post('userName')));
+						$this->session->set_userdata('userId', $tmpArr['id']);
+						$this->session->set_userdata('type', 'admin');
 						return TRUE;
 					}
 					else

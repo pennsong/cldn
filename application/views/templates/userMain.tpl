@@ -58,15 +58,23 @@
 	<div class="span-38">
 		课程列表
 	</div>
-	<div class="span-38">
-		<!--{foreach $courseList as $course}-->
+	<div class="span-38 rightBorder">
+		{if $sortType == 'mark'}
+		{foreach $courseMarkSortList as $mark}
 		<div class="span-38">
-			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$course['name']}</b>
+			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$mark['name']}</b>
 		</div>
 		<div class="prepend-1 span-37">
-			{foreach $course['courseArray'] as $item}
-			<div class="span-22">
-				{$item['name']}
+			{foreach $mark['courseArray'] as $item}
+			<div class="span-14">
+				<!--{if $item['bought'] == 'no'}-->
+				<!--{$item['name']}-->
+				<!--{elseif $item['bought'] == 'yes'}-->
+				<a class="normal" href="{base_url()}resource/php/split_document.php?doc={$item['path']}" target="_blank">{$item['name']}</a>
+				<!--{/if}-->
+			</div>
+			<div class="span-8">
+				{$item['bigAreaName']}|{$item['areaName']}
 			</div>
 			<div class="span-3">
 				{$item['cost']}积分
@@ -89,13 +97,59 @@
 			<div class="span-3">
 				<!--{if $item['bought'] == 'yes'}-->
 				<span>已购买</span>
-				<!--{else if $item['bought'] == 'no'}-->
+				<!--{elseif $item['bought'] == 'no'}-->
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
 				<!--{/if}-->
 			</div>
 			{/foreach}
 		</div>
-		<!--{/foreach}-->
+		{/foreach}
+		{else if $sortType == 'area'}
+		{foreach $courseAreaSortList as $area}
+		<div class="span-38">
+			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$area['areaName']}</b>
+		</div>
+		<div class="prepend-1 span-37">
+			{foreach $area['courseArray'] as $item}
+			<div class="span-14">
+				<!--{if $item['bought'] == 'no'}-->
+				<!--{$item['name']}-->
+				<!--{elseif $item['bought'] == 'yes'}-->
+				<a class="normal" href="{base_url()}resource/php/split_document.php?doc={$item['path']}" target="_blank">{$item['name']}</a>
+				<!--{/if}-->
+			</div>
+			<div class="span-8">
+				{$item['markName']}
+			</div>
+			<div class="span-3">
+				{$item['cost']}积分
+			</div>
+			<div class="span-3 locHolderDiv">
+				<a class="normal" href="#">目录</a>
+				<div class="locNoteDiv">
+					{$item['list']}
+				</div>
+			</div>
+			<div class="span-3 locHolderDiv">
+				<a class="normal" href="#">概述</a>
+				<div class="locNoteDiv">
+					{$item['introduction']}
+				</div>
+			</div>
+			<div class="span-3">
+				<a class="normal" href="#">预览</a>
+			</div>
+			<div class="span-3">
+				<!--{if $item['bought'] == 'yes'}-->
+				<span>已购买</span>
+				<!--{elseif $item['bought'] == 'no'}-->
+				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
+				<!--{/if}-->
+			</div>
+			{/foreach}
+		</div>
+		{/foreach}
+		{/if}
 	</div>
 </div>
 <div class="prepend-1 span-23 last">
@@ -104,20 +158,10 @@
 	</div>
 	<!--{foreach $boughtCourseList as $course}-->
 	<div class="prepend-1 span-22">
-		<div class="span-3">
-			<!--{$course['areaName']}-->
-			|
-		</div>
-		<div class="span-6">
-			<!--{foreach $course['markList'] as $mark}-->
-			<div class="span-3">
-				<!--{$mark['markName']}-->
-			</div>
-			<!--{/foreach}-->
-		</div>
-		<div class="span-12">
-			|{$course['expiration']}
-		</div>
+		{$course['bigAreaName']}|{$course['areaName']}({$course['markName']})
+	</div>
+	<div class="prepend-1 span-22">
+		{$course['expiration']}|{$course['updated']}
 	</div>
 	<div class="prepend-2 span-21">
 		<a class="normal" href="{base_url()}resource/php/split_document.php?doc={$course['path']}" target="_blank">{$course['courseName']}</a>

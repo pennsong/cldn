@@ -6,6 +6,10 @@ body.cldn {
 	font-size: 13px;
 }
 
+div.rightBorder
+{
+	border-right: 1px dashed #c0beb5;	
+}
 span.cldnH1 {
 	font-family: 'times new roman';
 	font-size: 26px;

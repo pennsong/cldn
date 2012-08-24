@@ -62,6 +62,14 @@ class CW_Controller extends CI_Controller
 					return TRUE;
 				}
 			}
+			else if ($this->session->userdata('type') == 'admin')
+			{
+				$tmpRes = $this->db->query("SELECT * FROM admin WHERE userName='{$this->session->userdata('userName')}';");
+				if ($tmpRes && $tmpRes->num_rows > 0)
+				{
+					return TRUE;
+				}
+			}
 		}
 		return FALSE;
 	}

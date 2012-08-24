@@ -11,25 +11,25 @@ class uploaderMain extends CW_Controller
 
 	private function _init()
 	{
-		//检查用户是否为uploader
-		if ($this->session->userdata('type') != 'uploader')
+		//检查用户是否为uploader或admin
+		if ($this->session->userdata('type') != 'uploader' && $this->session->userdata('type') != 'admin')
 		{
 			show_error('无权限做此操作!');
 		}
 		//取得area列表
-		$tmpRes = $this->db->query("SELECT * FROM area");
+		$tmpRes = $this->db->query("SELECT b.id bigAreaId, b.name bigAreaName, a.id areaId, a.name areaName FROM area a JOIN bigArea b on a.bigArea = b.id ORDER BY b.name, a.name");
 		$areaArray = $tmpRes->result_array();
 		$areaIdList = array();
 		$areaNameList = array();
 		foreach ($areaArray as $area)
 		{
-			array_push($areaIdList, $area['id']);
-			array_push($areaNameList, $area['name']);
+			array_push($areaIdList, $area['areaId']);
+			array_push($areaNameList, $area['bigAreaName'].'|'.$area['areaName']);
 		}
 		$this->smarty->assign('areaIdList', $areaIdList);
 		$this->smarty->assign('areaNameList', $areaNameList);
 		//取得mark列表
-		$tmpRes = $this->db->query("SELECT * FROM mark");
+		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
 		$markArray = $tmpRes->result_array();
 		$markIdList = array();
 		$markNameList = array();
@@ -42,92 +42,133 @@ class uploaderMain extends CW_Controller
 		$this->smarty->assign('markNameList', $markNameList);
 	}
 
-	private function _getUploadedFile()
+	private function _getUploadedFile($sortType)
 	{
+		//取得mark列表
+		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
+		$markArray = $tmpRes->result_array();
 		//取得已上传文件列表
-		$tmpRes = $this->db->query("SELECT a.id course, a.name courseName, a.area, b.name areaName FROM course a LEFT JOIN area b ON a.area = b.id WHERE a.uploader = ? ORDER BY a.area, courseName", array($this->session->userdata['userId']));
-		$fileArray = $tmpRes->result_array();
-		foreach ($fileArray as &$file)
+		if ($sortType == 'area')
 		{
-			$tmpRes = $this->db->query("SELECT a.mark, b.name markName FROM courseToMark a LEFT JOIN mark b on a.mark = b.id WHERE a.course = ?", $file['course']);
-			$file['markList'] = $tmpRes->result_array();
+			//取得bigArea列表
+			$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY name");
+			$bigAreaArray = $tmpRes->result_array();
+			foreach ($bigAreaArray as &$bigArea)
+			{
+				$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY name", array($bigArea['id']));
+				$bigArea['areaArray'] = $tmpRes->result_array();
+				foreach ($bigArea['areaArray'] as &$area)
+				{
+					$area['markArray'] = $markArray;
+					foreach ($area['markArray'] as &$mark)
+					{
+						if ($this->session->userdata('type') == 'uploader')
+						{
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? AND uploader = ? ORDER BY name", array(
+								$area['id'],
+								$mark['id'],
+								$this->session->userdata('userId')
+							));
+							$mark['courseList'] = $tmpRes->result_array();
+						}
+						else if ($this->session->userdata('type') == 'admin')
+						{
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY name", array(
+								$area['id'],
+								$mark['id']
+							));
+							$mark['courseList'] = $tmpRes->result_array();
+						}
+					}
+				}
+			}
+			$this->smarty->assign('courseAreaSortList', $bigAreaArray);
 		}
-		$this->smarty->assign('uploadedFileList', $fileArray);
+		else if ($sortType == 'mark')
+		{
+			//取得mark列表
+			$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
+			$markArray = $tmpRes->result_array();
+			foreach ($markArray as &$mark)
+			{
+				$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY name");
+				$mark['bigAreaArray'] = $tmpRes->result_array();
+				foreach ($mark['bigAreaArray'] as &$bigArea)
+				{
+					$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY name", array($bigArea['id']));
+					$bigArea['areaArray'] = $tmpRes->result_array();
+					foreach ($bigArea['areaArray'] as &$area)
+					{
+						$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY name", array(
+							$area['id'],
+							$mark['id']
+						));
+						$area['courseList'] = $tmpRes->result_array();
+					}
+				}
+			}
+			$this->smarty->assign('courseMarkSortList', $markArray);
+		}
 	}
 
-	public function index()
+	public function index($sortType = 'area')
 	{
-		$this->_getUploadedFile();
+		$this->_getUploadedFile($sortType);
+		$this->smarty->assign('sortType', $sortType);
 		$this->smarty->assign('type', 'create');
 		$this->smarty->display('uploaderMain.tpl');
 	}
 
-	public function update($course)
+	public function update($course, $sortType)
 	{
-		$this->_getUploadedFile();
+		$this->_getUploadedFile($sortType);
 		//取得course信息
-		$tmpRes = $this->db->query("SELECT id course, name, area, cost, introduction, list, uploader FROM course WHERE id = ?", array($course));
+		$tmpRes = $this->db->query("SELECT id course, name, area, mark, cost, introduction, list, uploader FROM course WHERE id = ?", array($course));
 		$courseInfo = $tmpRes->first_row('array');
 		//检查当前用户是否是文件拥有者
-		if ($courseInfo['uploader'] != $this->session->userdata('userId'))
+		if (!(($courseInfo['uploader'] == $this->session->userdata('userId') && $this->session->userdata('type') == 'uploader') || $this->session->userdata('type') == 'admin'))
 		{
 			show_error('无权限做此操作!');
 		}
 		//取得course mark信息
-		$tmpRes = $this->db->query("SELECT mark FROM courseToMark WHERE course = ?", array($course));
-		$tmpMarkArray = $tmpRes->result_array();
-		$mark = array();
-		foreach ($tmpMarkArray as $item)
-		{
-			array_push($mark, $item['mark']);
-		}
-		$courseInfo['mark'] = $mark;
 		$_POST = $courseInfo;
 		$this->smarty->assign('type', 'update');
+		$this->smarty->assign('sortType', $sortType);
 		$this->smarty->display('uploaderMain.tpl');
 	}
 
-	public function delete($course)
+	public function delete($course, $sortType)
 	{
+		$this->smarty->assign('sortType', $sortType);
 		//取得course信息
 		$tmpRes = $this->db->query("SELECT uploader FROM course WHERE id = ?", array($course));
 		//检查当前用户是否是文件拥有者
-		if ($tmpRes->first_row()->uploader != $this->session->userdata('userId'))
+		if (!(($tmpRes->first_row()->uploader == $this->session->userdata('userId') && $this->session->userdata('type') == 'uploader') || $this->session->userdata('type') == 'admin'))
 		{
 			show_error('无权限做此操作!');
 		}
 		$this->smarty->assign('type', 'create');
-		$this->_getUploadedFile();
+		$this->_getUploadedFile($sortType);
 		$this->db->trans_start();
-		$tmpRes = $this->db->query("DELETE FROM courseToMark WHERE course = ?", array($course));
+		$tmpRes = $this->db->query("DELETE FROM course WHERE id = ?", array($course));
 		if ($tmpRes)
 		{
-			//删除courseToMark失败, 继续删除course
-			$tmpRes = $this->db->query("DELETE FROM course WHERE id = ?", array($course));
-			if ($tmpRes)
-			{
-				$this->db->trans_commit();
-				$this->_getUploadedFile();
-				$this->_return("文件删除成功", "ok1");
-			}
-			else
-			{
-				//删除course失败
-				$this->db->trans_rollback();
-				$this->_return("删除文件失败,请重试!", "error1");
-			}
+			$this->db->trans_commit();
+			$this->_getUploadedFile($sortType);
+			$this->_return("文件删除成功", "ok1");
 		}
 		else
 		{
-			//删除courseToMark失败
+			//删除course失败
 			$this->db->trans_rollback();
-			$this->_return("删除文件标签失败,请重试!", "error1");
+			$this->_return("删除文件失败,请重试!", "error1");
 		}
 	}
 
-	public function uploadSubmit()
+	public function uploadSubmit($sortType)
 	{
-		$this->_getUploadedFile();
+		$this->smarty->assign('sortType', $sortType);
+		$this->_getUploadedFile($sortType);
 		$this->smarty->assign('type', $this->input->post('type'));
 		$this->lang->load('form_validation', 'chinese');
 		//检查数据格式
@@ -158,31 +199,22 @@ class uploaderMain extends CW_Controller
 				{
 					//上传文件成功继续处理文件相关信息
 					$this->db->trans_start();
-					$tmpRes = $this->db->query("INSERT INTO `course`(`uploader`, `name`, `path`, `area`, `cost`, `list`, `introduction`, `created`) VALUES (?, ?, ?, ?, ?, ?, ?, null)", array(
+					$tmpRes = $this->db->query("INSERT INTO `course`(`uploader`, `name`, `path`, `area`, `mark`, `cost`, `list`, `introduction`, `created`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, null)", array(
 						$this->session->userdata('userId'),
 						$fine_original_name,
 						$file_name,
 						$this->input->post('area'),
+						$this->input->post('mark'),
 						$this->input->post('cost'),
 						$this->input->post('list'),
 						$this->input->post('introduction')
 					));
 					if ($tmpRes)
 					{
-						$tmpCourse = $this->db->insert_id();
-						//添加文件信息成功,继续添加文件mark信息
-						foreach ($this->input->post('mark') as $mark)
-						{
-							$tmpRes = $this->db->query("INSERT INTO `courseToMark`(`course`, `mark`, `created`) VALUES (?, ?, null)", array(
-								$tmpCourse,
-								$mark
-							));
-							if (!$tmpRes)
-							{
-								$this->db->trans_rollback();
-								$this->_return("上传文件标签信息失败,请重试!", "error1");
-							}
-						}
+						$this->db->trans_commit();
+						$this->_getUploadedFile($sortType);
+						$_POST = NULL;
+						$this->_return("文件上传成功!", "ok1");
 					}
 					else
 					{
@@ -190,17 +222,14 @@ class uploaderMain extends CW_Controller
 						$this->db->trans_rollback();
 						$this->_return("上传文件信息失败,请重试!", "error1");
 					}
-					$this->db->trans_commit();
-					$this->_getUploadedFile();
-					$_POST = NULL;
-					$this->_return("文件上传成功!", "ok1");
 				}
 			}
 			else if ($this->input->post('type') == 'update')
 			{
 				$this->db->trans_start();
-				$tmpRes = $this->db->query("UPDATE `course` SET `area`= ?,`cost`= ?,`list`= ?,`introduction`= ? WHERE id = ?", array(
+				$tmpRes = $this->db->query("UPDATE `course` SET `area`= ?, `mark`= ?, `cost`= ?, `list`= ?, `introduction`= ? WHERE id = ?", array(
 					$this->input->post('area'),
+					$this->input->post('mark'),
 					$this->input->post('cost'),
 					$this->input->post('list'),
 					$this->input->post('introduction'),
@@ -208,31 +237,11 @@ class uploaderMain extends CW_Controller
 				));
 				if ($tmpRes)
 				{
-					//修改文件信息成功,继续修改mark信息
-					//先删除原有mark
-					$tmpRes = $this->db->query("DELETE FROM courseToMark WHERE course = ?", array($this->input->post('course')));
-					if ($tmpRes)
-					{
-						//删除原有mark成功,保存新标签
-						foreach ($this->input->post('mark') as $mark)
-						{
-							$tmpRes = $this->db->query("INSERT INTO `courseToMark`(`course`, `mark`, `created`) VALUES (?, ?, null)", array(
-								$this->input->post('course'),
-								$mark
-							));
-							if (!$tmpRes)
-							{
-								$this->db->trans_rollback();
-								$this->_return("修改文件标签信息失败,请重试!", "error1");
-							}
-						}
-					}
-					else
-					{
-						//删除原有mark失败
-						$this->db->trans_rollback();
-						$this->_return("修改文件标签信息失败,请重试!", "error1");
-					}
+					$this->db->trans_commit();
+					$this->_getUploadedFile($sortType);
+					$this->smarty->assign('type', 'create');
+					$_POST = NULL;
+					$this->_return("修改文件成功!", "ok1");
 				}
 				else
 				{
@@ -240,11 +249,6 @@ class uploaderMain extends CW_Controller
 					$this->db->trans_rollback();
 					$this->_return("修改文件信息失败,请重试!", "error1");
 				}
-				$this->db->trans_commit();
-				$this->_getUploadedFile();
-				$this->smarty->assign('type', 'create');
-				$_POST = NULL;
-				$this->_return("修改文件成功!", "ok1");
 			}
 		}
 	}

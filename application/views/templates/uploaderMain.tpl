@@ -13,11 +13,14 @@
 <script type="text/javascript" src="{base_url()}resource/xheditor/xheditor-1.1.14-zh-cn.min.js"></script>
 <!--{/block}-->
 <!--{block name=subBody}-->
-<div class="prepend-1 span-38">
+<div class="prepend-1 span-38 rightBorder">
 	<div class="span-38">
 		{$msg|default:""}
 	</div>
-	<form method="post" enctype="multipart/form-data" action="{site_url('uploaderMain/uploadSubmit')}">
+	<!--{if ($type == 'create' && $CI->session->userdata('type') == 'admin')}-->
+	<span>请在右侧列表选择需要修改的课程</span>
+	<!--{else}-->
+	<form method="post" enctype="multipart/form-data" action="{site_url('uploaderMain/uploadSubmit')}/{$sortType}">
 		<input type="hidden" name="type" value="{$type}">
 		<input type="hidden" name="course" value="{$smarty.post.course|default:''}">
 		<input type="hidden" name="uploader" value="{$CI->session->userdata('userId')}" />
@@ -43,7 +46,7 @@
 			标签选择:
 		</div>
 		<div class="prepend-1 span-37">
-			<!--{html_checkboxes name='mark' values=$markIdList output=$markNameList selected=$smarty.post.mark|default:'' separator="<br />"}-->
+			<!--{html_radios name='mark' values=$markIdList output=$markNameList selected=$smarty.post.mark|default:'' separator="<br />"}-->
 		</div>
 		<div class="span-38">
 			分数:
@@ -65,31 +68,78 @@
 			<input type="submit" value="上传" />
 		</div>
 	</form>
+	<!--{/if}-->
 </div>
 <div class="prepend-1 span-23 last">
 	<div class="span-23">
-		已上传课程
+		<div class="span-5">
+			已上传课程
+		</div>
+		<div class="prepend-1 span-17">
+			<ul id="navtabs">
+				<li>
+					<a class="{if $sortType=='area'} currentMenu {else} {/if}" href="{site_url('uploaderMain/index')}/area">按板块排序</a>
+				</li>
+				<li>
+					<a class="{if $sortType=='mark'} currentMenu {else} {/if}" href="{site_url('uploaderMain/index')}/mark">按级别排序 </a>
+				</li>
+			</ul>
+		</div>
 	</div>
-	<!--{foreach $uploadedFileList as $uploadedFile}-->
+	{if $sortType == 'area'}
+	{foreach $courseAreaSortList as $bigArea}
 	<div class="prepend-1 span-22">
-		<div class="span-3">
-			<!--{$uploadedFile['areaName']}-->
-		</div>
-		<div class="span-7">
-			<!--{foreach $uploadedFile['markList'] as $mark}-->
-			<div class="span-3">
-				<!--{$mark['markName']}-->
+		{$bigArea['name']}
+		{foreach $bigArea['areaArray'] as $area}
+		<div class="prepend-1 span-21">
+			{$area['name']}
+			{foreach $area['markArray'] as $mark}
+			<div class="prepend-1 span-20">
+				{$mark['name']}
+				{foreach $mark['courseList'] as $course}
+				<div class="prepend-1 span-19">
+					<div class="span-14">
+						{$course['name']}
+					</div>
+					<div class="span-5">
+						<a href="{site_url('uploaderMain/update')}/{$course['id']}/{$sortType}">编辑</a>
+						<a href="{site_url('uploaderMain/delete')}/{$course['id']}/{$sortType}">删除</a>
+					</div>
+				</div>
+				{/foreach}
 			</div>
-			<!--{/foreach}-->
+			{/foreach}
 		</div>
-		<div class="span-7 overflowHidden">
-			{$uploadedFile['courseName']}
-		</div>
-		<div class="span-4">
-			<a href="{site_url('uploaderMain/update')}/{$uploadedFile['course']}">编辑</a>
-			<a href="{site_url('uploaderMain/delete')}/{$uploadedFile['course']}">删除</a>
-		</div>
+		{/foreach}
 	</div>
-	<!--{/foreach}-->
+	{/foreach}
+	{else if $sortType == 'mark'}
+	{foreach $courseMarkSortList as $mark}
+	<div class="prepend-1 span-22">
+		{$mark['name']}
+		{foreach $mark['bigAreaArray'] as $bigArea}
+		<div class="prepend-1 span-21">
+			{$bigArea['name']}
+			{foreach $bigArea['areaArray'] as $area}
+			<div class="prepend-1 span-20">
+				{$area['name']}
+				{foreach $area['courseList'] as $course}
+				<div class="prepend-1 span-19">
+					<div class="span-14">
+						{$course['name']}
+					</div>
+					<div class="span-5">
+						<a href="{site_url('uploaderMain/update')}/{$course['id']}/{$sortType}">编辑</a>
+						<a href="{site_url('uploaderMain/delete')}/{$course['id']}/{$sortType}">删除</a>
+					</div>
+				</div>
+				{/foreach}
+			</div>
+			{/foreach}
+		</div>
+		{/foreach}
+	</div>
+	{/foreach}
+	{/if}
 </div>
 <!--{/block}-->

@@ -19,15 +19,15 @@ class userMain extends CW_Controller
 			show_error('无权限做此操作!');
 		}
 		//取得area列表
-		$tmpRes = $this->db->query("SELECT * FROM area ORDER BY name");
+		$tmpRes = $this->db->query("SELECT a.id areaId, a.name areaName, b.name bigAreaName FROM area a JOIN bigArea b ON a.bigArea = b.id ORDER BY b.name, a.name");
 		$areaArray = $tmpRes->result_array();
 		$this->areaArray = $areaArray;
 		$areaIdList = array();
 		$areaNameList = array();
 		foreach ($areaArray as $area)
 		{
-			array_push($areaIdList, $area['id']);
-			array_push($areaNameList, $area['name']);
+			array_push($areaIdList, $area['areaId']);
+			array_push($areaNameList, $area['areaName']);
 		}
 		$this->smarty->assign('areaIdList', $areaIdList);
 		$this->smarty->assign('areaNameList', $areaNameList);
@@ -51,27 +51,29 @@ class userMain extends CW_Controller
 		//取得课程列表
 		if ($sortType == 'area')
 		{
-			$courseList = $this->areaArray;
-			foreach ($courseList as &$item)
+			$courseAreaSortList = $this->areaArray;
+			foreach ($courseAreaSortList as &$item)
 			{
 				//取得当前所属板块课程信息
-				$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? ORDER BY name", array($item['id']));
+				$tmpRes = $this->db->query("SELECT a.id, a.cost, a.introduction, a.list, a.name, a.path, b.name markName FROM course a JOIN mark b ON a.mark = b.id WHERE area = ? ORDER BY b.name, a.name", array($item['areaId']));
 				$item['courseArray'] = $tmpRes->result_array();
 				//判断是否在有效购买期内
 				$this->_setBought($item['courseArray']);
 			}
+			$this->smarty->assign('courseAreaSortList', $courseAreaSortList);
 		}
 		else if ($sortType == 'mark')
 		{
-			$courseList = $this->markArray;
-			foreach ($courseList as &$item)
+			$courseMarkSortList = $this->markArray;
+			foreach ($courseMarkSortList as &$item)
 			{
 				//取得当前所属标签课程信息
-				$tmpRes = $this->db->query("SELECT a.* FROM course a JOIN courseToMark b on a.id = b.course WHERE b.mark = ? ORDER BY a.name", array($item['id']));
+				$tmpRes = $this->db->query("SELECT a.*, d.name bigAreaName, b.name areaName FROM course a JOIN area b ON a.area = b.id JOIN mark c ON a.mark = c.id JOIN bigArea d ON b.bigArea = d.id WHERE a.mark = ? ORDER BY d.name, b.name, a.name", array($item['id']));
 				$item['courseArray'] = $tmpRes->result_array();
 				//判断是否在有效购买期内
 				$this->_setBought($item['courseArray']);
 			}
+			$this->smarty->assign('courseMarkSortList', $courseMarkSortList);
 		}
 		else
 		{
@@ -79,7 +81,6 @@ class userMain extends CW_Controller
 		}
 		$this->_getBoughtCourse();
 		$this->smarty->assign('sortType', $sortType);
-		$this->smarty->assign('courseList', $courseList);
 		$this->smarty->display('userMain.tpl');
 	}
 
@@ -166,13 +167,8 @@ class userMain extends CW_Controller
 	private function _getBoughtCourse()
 	{
 		//取得已购买课程列表
-		$tmpRes = $this->db->query("SELECT b.id courseId, b.name courseName, b.path, c.id areaId, c.name areaName, a.expiration FROM userBuyCourse a JOIN course b on a.course = b.id JOIN area c ON b.area = c.id WHERE user = ? AND a.expiration >= DATE(NOW()) ORDER BY c.name", array($this->session->userdata['userId']));
+		$tmpRes = $this->db->query("SELECT a.updated, b.id courseId, b.name courseName, b.path, c.id areaId, e.name bigAreaName, c.name areaName, d.id markId, d.name markName, a.expiration FROM userBuyCourse a JOIN course b on a.course = b.id JOIN area c ON b.area = c.id JOIN mark d ON b.mark = d.id JOIN bigArea e ON c.bigArea = e.id WHERE user = ? AND a.expiration >= DATE(NOW()) ORDER BY a.updated DESC", array($this->session->userdata['userId']));
 		$courseArray = $tmpRes->result_array();
-		foreach ($courseArray as &$course)
-		{
-			$tmpRes = $this->db->query("SELECT a.mark, b.name markName FROM courseToMark a LEFT JOIN mark b on a.mark = b.id WHERE a.course = ?", $course['courseId']);
-			$course['markList'] = $tmpRes->result_array();
-		}
 		$this->smarty->assign('boughtCourseList', $courseArray);
 	}
 
