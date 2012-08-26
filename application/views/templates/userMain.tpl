@@ -70,7 +70,7 @@
 				<!--{if $item['bought'] == 'no'}-->
 				<!--{$item['name']}-->
 				<!--{elseif $item['bought'] == 'yes'}-->
-				<a class="normal" href="{base_url()}resource/php/split_document.php?doc={$item['path']}" target="_blank">{$item['name']}</a>
+				<a class="normal" href="{site_url('FPView/viewAll')}/{$item['path']}" target="_blank">{$item['name']}</a>
 				<!--{/if}-->
 			</div>
 			<div class="span-8">
@@ -92,7 +92,7 @@
 				</div>
 			</div>
 			<div class="span-3">
-				<a class="normal" href="#">预览</a>
+				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['path']}" target="_blank">预览</a>
 			</div>
 			<div class="span-3">
 				<!--{if $item['bought'] == 'yes'}-->
@@ -115,7 +115,7 @@
 				<!--{if $item['bought'] == 'no'}-->
 				<!--{$item['name']}-->
 				<!--{elseif $item['bought'] == 'yes'}-->
-				<a class="normal" href="{base_url()}resource/php/split_document.php?doc={$item['path']}" target="_blank">{$item['name']}</a>
+				<a class="normal" href="{site_url('FPView/viewAll')}/{$item['path']}" target="_blank">{$item['name']}</a>
 				<!--{/if}-->
 			</div>
 			<div class="span-8">
@@ -137,7 +137,7 @@
 				</div>
 			</div>
 			<div class="span-3">
-				<a class="normal" href="#">预览</a>
+				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['path']}" target="_blank">预览</a>
 			</div>
 			<div class="span-3">
 				<!--{if $item['bought'] == 'yes'}-->
@@ -164,7 +164,7 @@
 		{$course['expiration']}|{$course['updated']}
 	</div>
 	<div class="prepend-2 span-21">
-		<a class="normal" href="{base_url()}resource/php/split_document.php?doc={$course['path']}" target="_blank">{$course['courseName']}</a>
+		<a class="normal" href="{site_url('FPView/viewAll')}/{$course['path']}" target="_blank">{$course['courseName']}</a>
 	</div>
 	<!--{/foreach}-->
 </div>
