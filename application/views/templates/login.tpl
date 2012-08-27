@@ -114,8 +114,11 @@
 						</div>
 					</div>
 				</div>
+				<div class="clear prepend-19 span-6">
+					<a class="line1" href="{site_url('visitorMain/noLogin_index')}">先进去看看</a>
+				</div>
 				<div class="clear prepend-19 append-bottom5">
-					<div class="label1">
+					<div class="span-6 label1">
 						请选择您的身份
 					</div>
 				</div>

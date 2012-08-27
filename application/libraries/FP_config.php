@@ -17,7 +17,7 @@ class FP_config
 		$this->config = array(
 			'test_pdf2swf'=>1,
 			'test_pdf2json'=>"",
-			'allowcache'=>1,
+			'allowcache'=>0,
 			'splitmode'=>1,
 			'path.pdf'=>"/pdf/",
 			'path.swf'=>"/pdfWorking/",

@@ -270,6 +270,11 @@ class Login extends CW_Controller
 		}
 	}
 
+	public function help()
+	{
+		$this->smarty->display('loginHelp.tpl');
+	}
+
 }
 
 /*end*/

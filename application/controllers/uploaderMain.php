@@ -29,7 +29,7 @@ class uploaderMain extends CW_Controller
 		$this->smarty->assign('areaIdList', $areaIdList);
 		$this->smarty->assign('areaNameList', $areaNameList);
 		//取得mark列表
-		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
+		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY sortOrder");
 		$markArray = $tmpRes->result_array();
 		$markIdList = array();
 		$markNameList = array();
@@ -45,7 +45,7 @@ class uploaderMain extends CW_Controller
 	private function _getUploadedFile($sortType)
 	{
 		//取得mark列表
-		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
+		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY sortOrder");
 		$markArray = $tmpRes->result_array();
 		//取得已上传文件列表
 		if ($sortType == 'area')
@@ -87,7 +87,7 @@ class uploaderMain extends CW_Controller
 		else if ($sortType == 'mark')
 		{
 			//取得mark列表
-			$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
+			$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY sortOrder");
 			$markArray = $tmpRes->result_array();
 			foreach ($markArray as &$mark)
 			{
@@ -99,11 +99,23 @@ class uploaderMain extends CW_Controller
 					$bigArea['areaArray'] = $tmpRes->result_array();
 					foreach ($bigArea['areaArray'] as &$area)
 					{
-						$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY name", array(
-							$area['id'],
-							$mark['id']
-						));
-						$area['courseList'] = $tmpRes->result_array();
+						if ($this->session->userdata('type') == 'uploader')
+						{
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? AND uploader = ? ORDER BY name", array(
+								$area['id'],
+								$mark['id'],
+								$this->session->userdata('userId')
+							));
+							$area['courseList'] = $tmpRes->result_array();
+						}
+						else if ($this->session->userdata('type') == 'admin')
+						{
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY name", array(
+								$area['id'],
+								$mark['id'],
+							));
+							$area['courseList'] = $tmpRes->result_array();
+						}
 					}
 				}
 			}

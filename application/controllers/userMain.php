@@ -32,7 +32,7 @@ class userMain extends CW_Controller
 		$this->smarty->assign('areaIdList', $areaIdList);
 		$this->smarty->assign('areaNameList', $areaNameList);
 		//取得mark列表
-		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY name");
+		$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY sortOrder");
 		$markArray = $tmpRes->result_array();
 		$this->markArray = $markArray;
 		$markIdList = array();
@@ -167,7 +167,7 @@ class userMain extends CW_Controller
 	private function _getBoughtCourse()
 	{
 		//取得已购买课程列表
-		$tmpRes = $this->db->query("SELECT a.updated, b.id courseId, b.name courseName, b.path, c.id areaId, e.name bigAreaName, c.name areaName, d.id markId, d.name markName, a.expiration FROM userBuyCourse a JOIN course b on a.course = b.id JOIN area c ON b.area = c.id JOIN mark d ON b.mark = d.id JOIN bigArea e ON c.bigArea = e.id WHERE user = ? AND a.expiration >= DATE(NOW()) ORDER BY a.updated DESC", array($this->session->userdata['userId']));
+		$tmpRes = $this->db->query("SELECT a.updated, a.course, b.id courseId, b.name courseName, b.path, c.id areaId, e.name bigAreaName, c.name areaName, d.id markId, d.name markName, a.expiration FROM userBuyCourse a JOIN course b on a.course = b.id JOIN area c ON b.area = c.id JOIN mark d ON b.mark = d.id JOIN bigArea e ON c.bigArea = e.id WHERE user = ? AND a.expiration >= DATE(NOW()) ORDER BY a.updated DESC", array($this->session->userdata['userId']));
 		$courseArray = $tmpRes->result_array();
 		$this->smarty->assign('boughtCourseList', $courseArray);
 	}

@@ -10,54 +10,120 @@ class FPView extends CW_Controller
 		$this->load->helper('fp_common');
 	}
 
-	public function noLogin_preview($doc)
+	public function noLogin_preview($course)
 	{
-		$numPages = getTotalPages($this->fp_config->getConfig('path.pdf').$doc);
-		if ($numPages >= 3)
+		$tmpRes = $this->db->query("SELECT path FROM course WHERE id=?", array($course));
+		if ($tmpRes->num_rows() > 0)
 		{
-			$numPages = 3;
+			$doc = $tmpRes->first_row()->path;
+			$numPages = getTotalPages($this->fp_config->getConfig('path.pdf').$doc);
+			if ($numPages >= 3)
+			{
+				$numPages = 3;
+			}
+			$this->smarty->assign('course', $course);
+			$this->smarty->assign('numPages', $numPages);
+			$this->smarty->display('fpView.tpl');
 		}
-		$this->smarty->assign('doc', $doc);
-		$this->smarty->assign('numPages', $numPages);
-		$this->smarty->display('fpView.tpl');
-	}
-
-	public function viewAll($doc)
-	{
-		$numPages = getTotalPages($this->fp_config->getConfig('path.pdf').$doc);
-		$this->smarty->assign('doc', $doc);
-		$this->smarty->assign('numPages', $numPages);
-		$this->smarty->display('fpView.tpl');
-	}
-
-	public function noLogin_view($doc, $page)
-	{
-		$pos = strpos($doc, "/");
-		$swfFilePath = $this->fp_config->getConfig('path.swf').$doc.$page.".swf";
-		$pdfFilePath = $this->fp_config->getConfig('path.pdf').$doc;
-		if (!validPdfParams($pdfFilePath, $doc, $page))
-			echo "[Incorrect file specified]";
 		else
 		{
-			$this->load->library('pdf2swf');
-			$output = $this->pdf2swf->convert($doc, $page);
-			if (rtrim($output) === "[Converted]")
+			show_error('无此课程!');
+		}
+	}
+
+	public function viewAll($course)
+	{
+		$tmpRes = $this->db->query("SELECT path FROM course WHERE id=?", array($course));
+		if ($tmpRes->num_rows() > 0)
+		{
+			$doc = $tmpRes->first_row()->path;
+			$numPages = getTotalPages($this->fp_config->getConfig('path.pdf').$doc);
+			$this->smarty->assign('course', $course);
+			$this->smarty->assign('numPages', $numPages);
+			$this->smarty->display('fpView.tpl');
+		}
+		else
+		{
+			show_error('无此课程!');
+		}
+	}
+
+	public function noLogin_checkAccessRight($course)
+	{
+		if ($this->session->userdata('type') == 'user')
+		{
+			$tmpRes = $this->db->query("SELECT count(*) num FROM userBuyCourse WHERE course=? AND user=? AND expiration>=DATE(NOW())", array(
+				$course,
+				$this->session->userdata('userId')
+			));
+			if ($tmpRes->first_row()->num > 0)
 			{
-				if ($this->fp_config->getConfig('allowcache'))
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		else if ($this->session->userdata('type') == 'uploader' || $this->session->userdata('type') == 'admin')
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	public function noLogin_view($course, $page)
+	{
+		//检查阅读权限
+		if ($page <= 3 || $this->noLogin_checkAccessRight($course))
+		{
+			$tmpRes = $this->db->query("SELECT path FROM course WHERE id=?", array($course));
+			if ($tmpRes->num_rows() > 0)
+			{
+				$doc = $tmpRes->first_row()->path;
+				$pos = strpos($doc, "/");
+				$swfFilePath = $this->fp_config->getConfig('path.swf').$doc.$page.".swf";
+				$pdfFilePath = $this->fp_config->getConfig('path.pdf').$doc;
+				if (!validPdfParams($pdfFilePath, $doc, $page))
+					echo "[Incorrect file specified]";
+				else
 				{
-					setCacheHeaders();
-				}
-				if (!$this->fp_config->getConfig('allowcache') || ($this->fp_config->getConfig('allowcache') && endOrRespond()))
-				{
-					header('Content-type: application/x-shockwave-flash');
-					header('Accept-Ranges: bytes');
-					header('Content-Length: '.filesize($swfFilePath));
-					echo file_get_contents($swfFilePath);
+					$this->load->library('pdf2swf');
+					$output = $this->pdf2swf->convert($doc, $page);
+					if (rtrim($output) === "[Converted]")
+					{
+						if ($this->fp_config->getConfig('allowcache'))
+						{
+							setCacheHeaders();
+						}
+						if (!$this->fp_config->getConfig('allowcache') || ($this->fp_config->getConfig('allowcache') && endOrRespond()))
+						{
+							header('Content-type: application/x-shockwave-flash');
+							header('Accept-Ranges: bytes');
+							header('Content-Length: '.filesize($swfFilePath));
+							echo file_get_contents($swfFilePath);
+						}
+					}
+					else
+						echo $output;
+					//error messages etc
 				}
 			}
 			else
-				echo $output;
-			//error messages etc
+			{
+				show_error('无此课程!');
+			}
+		}
+		else
+		{
+			$swfFilePath = $this->fp_config->getConfig('path.swf').'noAccess.pdf'.".swf";
+			header('Content-type: application/x-shockwave-flash');
+			header('Accept-Ranges: bytes');
+			header('Content-Length: '.filesize($swfFilePath));
+			echo file_get_contents($swfFilePath);
 		}
 	}
 

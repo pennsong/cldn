@@ -20,9 +20,9 @@
 			Document loading..
 		</p>
 		<script type="text/javascript">
-			var doc = "{$doc}";
+			var course = "{$course}";
 			var numPages = "{$numPages}";
-			var swfFileUrl = escape('({site_url("FPView/noLogin_view")}/' + doc + '/[*,0],' + numPages + ')');
+			var swfFileUrl = escape('({site_url("FPView/noLogin_view")}/' + course + '/[*,0],' + numPages + ')');
 			;
 			var searchServiceUrl = '';
 			var fp = new FlexPaperViewer('{base_url()}resource/js/FlexPaperViewer', 'viewerPlaceHolder',

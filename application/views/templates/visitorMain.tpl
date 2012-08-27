@@ -1,6 +1,6 @@
-<!--{extends file='userPage.tpl'}-->
+<!--{extends file='visitorPage.tpl'}-->
 <!--{block name=title}-->
-<title>普通用户首页</title>
+<title>访客首页</title>
 <!--{/block}-->
 <!--{block name=style}-->
 <style type="text/css" media="screen">
@@ -48,10 +48,10 @@
 	<div class="span-38">
 		<ul id="navtabs">
 			<li>
-				<a class="{if $sortType=='area'} currentMenu {else} {/if}" href="{site_url('userMain/index/area')}">按板块分类</a>
+				<a class="{if $sortType=='area'} currentMenu {else} {/if}" href="{site_url('visitorMain/noLogin_index/area')}">按板块分类</a>
 			</li>
 			<li>
-				<a class="{if $sortType=='mark'} currentMenu {else} {/if}" href="{site_url('userMain/index/mark')}">按标签分类</a>
+				<a class="{if $sortType=='mark'} currentMenu {else} {/if}" href="{site_url('visitorMain/noLogin_index/mark')}">按标签分类</a>
 			</li>
 		</ul>
 	</div>
@@ -67,11 +67,7 @@
 		<div class="prepend-1 span-37">
 			{foreach $mark['courseArray'] as $item}
 			<div class="span-14">
-				<!--{if $item['bought'] == 'no'}-->
-				<!--{$item['name']}-->
-				<!--{elseif $item['bought'] == 'yes'}-->
-				<a class="normal" href="{site_url('FPView/viewAll')}/{$item['id']}" target="_blank">{$item['name']}</a>
-				<!--{/if}-->
+				{$item['name']}
 			</div>
 			<div class="span-8">
 				{$item['bigAreaName']}|{$item['areaName']}
@@ -95,11 +91,7 @@
 				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
 			</div>
 			<div class="span-3">
-				<!--{if $item['bought'] == 'yes'}-->
-				<span>已购买</span>
-				<!--{elseif $item['bought'] == 'no'}-->
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
-				<!--{/if}-->
 			</div>
 			{/foreach}
 		</div>
@@ -112,11 +104,7 @@
 		<div class="prepend-1 span-37">
 			{foreach $area['courseArray'] as $item}
 			<div class="span-14">
-				<!--{if $item['bought'] == 'no'}-->
-				<!--{$item['name']}-->
-				<!--{elseif $item['bought'] == 'yes'}-->
-				<a class="normal" href="{site_url('FPView/viewAll')}/{$item['id']}" target="_blank">{$item['name']}</a>
-				<!--{/if}-->
+				{$item['name']}
 			</div>
 			<div class="span-8">
 				{$item['markName']}
@@ -140,11 +128,7 @@
 				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
 			</div>
 			<div class="span-3">
-				<!--{if $item['bought'] == 'yes'}-->
-				<span>已购买</span>
-				<!--{elseif $item['bought'] == 'no'}-->
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
-				<!--{/if}-->
 			</div>
 			{/foreach}
 		</div>
@@ -156,16 +140,5 @@
 	<div class="span-23">
 		<span class="cldnH1">已购买课程:</span>
 	</div>
-	<!--{foreach $boughtCourseList as $course}-->
-	<div class="prepend-1 span-22">
-		{$course['bigAreaName']}|{$course['areaName']}({$course['markName']})
-	</div>
-	<div class="prepend-1 span-22">
-		{$course['expiration']}|{$course['updated']}
-	</div>
-	<div class="prepend-2 span-21">
-		<a class="normal" href="{site_url('FPView/viewAll')}/{$course['course']}" target="_blank">{$course['courseName']}</a>
-	</div>
-	<!--{/foreach}-->
 </div>
 <!--{/block}-->

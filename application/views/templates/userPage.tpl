@@ -12,7 +12,7 @@
 		欢迎您,普通用户:{$CI->session->userdata('userName')}|剩余积分:{$CI->session->userdata('point')}
 	</div>
 	<div class="span-3">
-		<a href="{site_url('login/logout')}">退出</a>
+		<a href="{site_url('login/help')}" target="_blank">帮助</a>|<a href="{site_url('login/logout')}">退出</a>
 	</div>
 </div>
 <div class="prepend-top span-64 last">
