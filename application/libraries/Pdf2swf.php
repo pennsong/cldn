@@ -26,7 +26,7 @@ class Pdf2swf
 	function __construct()
 	{
 		$this->CI = &get_instance();
-		$this->CI->load->library('fp_config');
+		$this->CI->load->library('FP_config');
 		$this->CI->load->helper('fp_common');
 	}
 

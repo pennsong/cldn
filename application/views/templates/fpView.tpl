@@ -14,7 +14,7 @@
 			var numPages = "{$numPages}";
 			var swfFileUrl = escape('({site_url("FPView/noLogin_view")}/' + course + '/[*,0],' + numPages + ')');
 			var searchServiceUrl = '';
-			flashembed("viewerPlaceHolder", '{base_url()}resource/js/FlexPaperViewer',
+			flashembed("viewerPlaceHolder", '{base_url()}resource/js/FlexPaperViewer.swf',
 			{
 				// these properties are given for the Flash object
 				SwfFile : swfFileUrl,

@@ -6,7 +6,7 @@ class FPView extends CW_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('fp_config');
+		$this->load->library('FP_config');
 		$this->load->helper('fp_common');
 	}
 
@@ -91,7 +91,7 @@ class FPView extends CW_Controller
 					echo "[Incorrect file specified]";
 				else
 				{
-					$this->load->library('pdf2swf');
+					$this->load->library('Pdf2swf');
 					$output = $this->pdf2swf->convert($doc, $page);
 					if (rtrim($output) === "[Converted]")
 					{
