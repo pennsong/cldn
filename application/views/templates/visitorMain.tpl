@@ -9,11 +9,12 @@
 	}
 	.locHolderDiv {
 		position: relative;
+		z-index: 1000;
 	}
 	.locNoteDiv {
 		position: absolute;
 		top: 15px;
-		left: 20px;
+		left: 25px;
 		width: 500px;
 		border: 1px solid black;
 		background-color: #FFFFFF;
@@ -75,24 +76,29 @@
 			<div class="span-3">
 				{$item['cost']}积分
 			</div>
-			<div class="span-3 locHolderDiv">
-				<a class="normal" href="#">目录</a>
-				<div class="locNoteDiv">
-					{$item['list']}
-				</div>
-			</div>
-			<div class="span-3 locHolderDiv">
-				<a class="normal" href="#">概述</a>
-				<div class="locNoteDiv">
-					{$item['introduction']}
-				</div>
-			</div>
 			<div class="span-3">
 				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
 			</div>
 			<div class="span-3">
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
 			</div>
+			<div class="prepend-25 span-12">
+				<div class="span-30 locHolderDiv">
+					<a class="normal" href="#">目录</a>
+					<div class="locNoteDiv">
+						{$item['list']}
+					</div>
+				</div>
+			</div>
+			<div class="prepend-25 span-12">
+				<div class="span-30 locHolderDiv">
+					<a class="normal" href="#">概述</a>
+					<div class="locNoteDiv">
+						{$item['introduction']}
+					</div>
+				</div>
+			</div>
+			<hr>
 			{/foreach}
 		</div>
 		{/foreach}
@@ -112,24 +118,29 @@
 			<div class="span-3">
 				{$item['cost']}积分
 			</div>
-			<div class="span-3 locHolderDiv">
-				<a class="normal" href="#">目录</a>
-				<div class="locNoteDiv">
-					{$item['list']}
-				</div>
-			</div>
-			<div class="span-3 locHolderDiv">
-				<a class="normal" href="#">概述</a>
-				<div class="locNoteDiv">
-					{$item['introduction']}
-				</div>
-			</div>
 			<div class="span-3">
 				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
 			</div>
 			<div class="span-3">
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
 			</div>
+			<div class="prepend-25 span-12">
+				<div class="span-30 locHolderDiv">
+					<a class="normal" href="#">目录</a>
+					<div class="locNoteDiv">
+						{$item['list']}
+					</div>
+				</div>
+			</div>
+			<div class="prepend-25 span-12">
+				<div class="span-30 locHolderDiv">
+					<a class="normal" href="#">概述</a>
+					<div class="locNoteDiv">
+						{$item['introduction']}
+					</div>
+				</div>
+			</div>
+			<hr>
 			{/foreach}
 		</div>
 		{/foreach}
