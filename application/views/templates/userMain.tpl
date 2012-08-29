@@ -113,7 +113,7 @@
 		{else if $sortType == 'area'}
 		{foreach $courseAreaSortList as $area}
 		<div class="span-38">
-			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$area['areaName']}</b>
+			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$area['bigAreaName']}|{$area['areaName']}</b>
 		</div>
 		<div class="prepend-1 span-37">
 			{foreach $area['courseArray'] as $item}
