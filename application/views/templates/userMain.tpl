@@ -44,7 +44,7 @@
 		{$msg|default:""}
 	</div>
 	<div class="span-38">
-		<span class="cldnH1">课程板块:</span>
+		<span class="cldnH1">培训课程:</span>
 	</div>
 	<div class="span-38">
 		<ul id="navtabs">
@@ -74,11 +74,11 @@
 				<a class="normal" href="{site_url('FPView/viewAll')}/{$item['id']}" target="_blank">{$item['name']}</a>
 				<!--{/if}-->
 			</div>
-			<div class="span-8">
+			<div class="span-12">
 				{$item['bigAreaName']}|{$item['areaName']}
 			</div>
-			<div class="span-3">
-				{$item['cost']}积分
+			<div class="span-5 point">
+				{$item['cost']}点积分
 			</div>
 			<div class="span-3">
 				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
@@ -90,7 +90,7 @@
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
 				<!--{/if}-->
 			</div>
-			<div class="prepend-25 span-12">
+			<div class="prepend-31 span-6">
 				<div class="span-30 locHolderDiv">
 					<a class="normal" href="#">目录</a>
 					<div class="locNoteDiv">
@@ -98,7 +98,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="prepend-25 span-12">
+			<div class="prepend-31 span-6">
 				<div class="span-30 locHolderDiv">
 					<a class="normal" href="#">概述</a>
 					<div class="locNoteDiv">
@@ -124,11 +124,11 @@
 				<a class="normal" href="{site_url('FPView/viewAll')}/{$item['id']}" target="_blank">{$item['name']}</a>
 				<!--{/if}-->
 			</div>
-			<div class="span-8">
+			<div class="span-12">
 				{$item['markName']}
 			</div>
-			<div class="span-3">
-				{$item['cost']}积分
+			<div class="span-5 point">
+				{$item['cost']}点积分
 			</div>
 			<div class="span-3">
 				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
@@ -140,7 +140,7 @@
 				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
 				<!--{/if}-->
 			</div>
-			<div class="prepend-25 span-12">
+			<div class="prepend-31 span-6">
 				<div class="span-30 locHolderDiv">
 					<a class="normal" href="#">目录</a>
 					<div class="locNoteDiv">
@@ -148,7 +148,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="prepend-25 span-12">
+			<div class="prepend-31 span-6">
 				<div class="span-30 locHolderDiv">
 					<a class="normal" href="#">概述</a>
 					<div class="locNoteDiv">

@@ -14,6 +14,12 @@ span.cldnH1 {
 	font-size: 26px;
 }
 
+.point {
+	color: red;
+	font-size: 14px;
+	font-weight: bold;
+}
+
 #navtabs {
 	background: #eeece1;
 	color: #948a54;

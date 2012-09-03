@@ -11,6 +11,22 @@
 <!--{/block}-->
 <!--{block name=subScript}-->
 <script type="text/javascript" src="{base_url()}resource/xheditor/xheditor-1.1.14-zh-cn.min.js"></script>
+<script>
+	$(document).ready(function()
+	{
+		$(".delete").click(function(e)
+		{
+			var r = confirm("确定要删除此条记录么?");
+			if (r == true)
+			{
+			}
+			else
+			{
+				e.preventDefault();
+			}
+		});
+	}); 
+</script>
 <!--{/block}-->
 <!--{block name=subBody}-->
 <div class="prepend-1 span-38 rightBorder">
@@ -103,7 +119,7 @@
 					</div>
 					<div class="span-5">
 						<a href="{site_url('uploaderMain/update')}/{$course['id']}/{$sortType}">编辑</a>
-						<a href="{site_url('uploaderMain/delete')}/{$course['id']}/{$sortType}">删除</a>
+						<a class="delete" href="{site_url('uploaderMain/delete')}/{$course['id']}/{$sortType}">删除</a>
 					</div>
 				</div>
 				{/foreach}
@@ -130,7 +146,7 @@
 					</div>
 					<div class="span-5">
 						<a href="{site_url('uploaderMain/update')}/{$course['id']}/{$sortType}">编辑</a>
-						<a href="{site_url('uploaderMain/delete')}/{$course['id']}/{$sortType}">删除</a>
+						<a class="delete" href="{site_url('uploaderMain/delete')}/{$course['id']}/{$sortType}">删除</a>
 					</div>
 				</div>
 				{/foreach}

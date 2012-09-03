@@ -16,6 +16,9 @@
 			div.locUserType {
 				height: 19px;
 			}
+			div.space {
+				height: 100px;
+			}
 		</style>
 		<script>
 			$(document).ready(function()
@@ -82,9 +85,14 @@
 			<div class="span-64 last">
 				  <img class="" src="{base_url()}resource/img/logo.png"/>
 			</div>
+			<div class="space span-64 last">
+			</div>
 			<div class="clear prepend-19 last append-bottom20">
 				<div>
-					<span class="cldnH1">欢迎来到CLDN</span>
+					<span class="cldnH1">金融与技术知识学院</span>
+				</div>
+				<div>
+					<span class="cldnH1">Financial IT Academy</span>
 				</div>
 			</div>
 			<form id="locLoginForm" action="{site_url('login/validateLogin')}" method="post">
