@@ -7,6 +7,9 @@
 	.locHMiddle {
 		text-align: center;
 	}
+	.draw {
+		cursor: pointer;
+	}
 </style>
 <!--{/block}-->
 <!--{block name=subScript}-->
@@ -23,6 +26,18 @@
 			else
 			{
 				e.preventDefault();
+			}
+		});
+		$(".draw").click(function()
+		{
+			$(this).siblings().toggle();
+			if ($(this).children().html() == '&gt;')
+			{
+				$(this).children().html('&lt;');
+			}
+			else
+			{
+				$(this).children().html('&gt;');
 			}
 		});
 	}); 
@@ -111,13 +126,19 @@
 	{if $sortType == 'area'}
 	{foreach $courseAreaSortList as $bigArea}
 	<div class="prepend-1 span-22">
-		{$bigArea['name']}
+		<div class="draw">
+			{$bigArea['name']}<span>></span>
+		</div>
 		{foreach $bigArea['areaArray'] as $area}
 		<div class="prepend-1 span-21">
-			{$area['name']}
+			<div class="draw">
+				{$area['name']} <span>></span>
+			</div>
 			{foreach $area['markArray'] as $mark}
 			<div class="prepend-1 span-20">
-				{$mark['name']}
+				<div class="draw">
+					{$mark['name']} <span>></span>
+				</div>
 				{foreach $mark['courseList'] as $course}
 				<div class="prepend-1 span-19">
 					<div class="span-14">
@@ -138,13 +159,19 @@
 	{else if $sortType == 'mark'}
 	{foreach $courseMarkSortList as $mark}
 	<div class="prepend-1 span-22">
-		{$mark['name']}
+		<div class="draw">
+			{$mark['name']}<span>></span>
+		</div>
 		{foreach $mark['bigAreaArray'] as $bigArea}
 		<div class="prepend-1 span-21">
-			{$bigArea['name']}
+			<div class="draw">
+				{$bigArea['name']}<span>></span>
+			</div>
 			{foreach $bigArea['areaArray'] as $area}
 			<div class="prepend-1 span-20">
-				{$area['name']}
+				<div class="draw">
+					{$area['name']}<span>></span>
+				</div>
 				{foreach $area['courseList'] as $course}
 				<div class="prepend-1 span-19">
 					<div class="span-14">

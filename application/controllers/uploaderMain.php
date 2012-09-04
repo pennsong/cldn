@@ -17,7 +17,7 @@ class uploaderMain extends CW_Controller
 			show_error('无权限做此操作!');
 		}
 		//取得area列表
-		$tmpRes = $this->db->query("SELECT b.id bigAreaId, b.name bigAreaName, a.id areaId, a.name areaName FROM area a JOIN bigArea b on a.bigArea = b.id ORDER BY b.name, a.name");
+		$tmpRes = $this->db->query("SELECT b.id bigAreaId, b.name bigAreaName, a.id areaId, a.name areaName FROM area a JOIN bigArea b on a.bigArea = b.id ORDER BY b.sortOrder, a.sortOrder");
 		$areaArray = $tmpRes->result_array();
 		$areaIdList = array();
 		$areaNameList = array();
@@ -62,11 +62,11 @@ class uploaderMain extends CW_Controller
 		if ($sortType == 'area')
 		{
 			//取得bigArea列表
-			$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY name");
+			$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY sortOrder");
 			$bigAreaArray = $tmpRes->result_array();
 			foreach ($bigAreaArray as &$bigArea)
 			{
-				$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY name", array($bigArea['id']));
+				$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY sortOrder", array($bigArea['id']));
 				$bigArea['areaArray'] = $tmpRes->result_array();
 				foreach ($bigArea['areaArray'] as &$area)
 				{
@@ -75,7 +75,7 @@ class uploaderMain extends CW_Controller
 					{
 						if ($this->session->userdata('type') == 'uploader')
 						{
-							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? AND uploader = ? ORDER BY name", array(
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? AND uploader = ? ORDER BY sortOrder", array(
 								$area['id'],
 								$mark['id'],
 								$this->session->userdata('userId')
@@ -84,7 +84,7 @@ class uploaderMain extends CW_Controller
 						}
 						else if ($this->session->userdata('type') == 'admin')
 						{
-							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY name", array(
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY sortOrder", array(
 								$area['id'],
 								$mark['id']
 							));
@@ -102,17 +102,17 @@ class uploaderMain extends CW_Controller
 			$markArray = $tmpRes->result_array();
 			foreach ($markArray as &$mark)
 			{
-				$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY name");
+				$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY sortOrder");
 				$mark['bigAreaArray'] = $tmpRes->result_array();
 				foreach ($mark['bigAreaArray'] as &$bigArea)
 				{
-					$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY name", array($bigArea['id']));
+					$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY sortOrder", array($bigArea['id']));
 					$bigArea['areaArray'] = $tmpRes->result_array();
 					foreach ($bigArea['areaArray'] as &$area)
 					{
 						if ($this->session->userdata('type') == 'uploader')
 						{
-							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? AND uploader = ? ORDER BY name", array(
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? AND uploader = ? ORDER BY sortOrder", array(
 								$area['id'],
 								$mark['id'],
 								$this->session->userdata('userId')
@@ -121,7 +121,7 @@ class uploaderMain extends CW_Controller
 						}
 						else if ($this->session->userdata('type') == 'admin')
 						{
-							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY name", array(
+							$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ORDER BY sortOrder", array(
 								$area['id'],
 								$mark['id'],
 							));

@@ -5,8 +5,20 @@ class VisitorMain extends CW_Controller
 {
 	private $areaArray;
 	private $markArray;
-	public function noLogin_index($sortType = 'area')
+	public function noLogin_index($sortType = 'area', $language = "all")
 	{
+		$languageSql = '';
+		if ($language == "all")
+		{
+		}
+		else if ($language == 'en')
+		{
+			$languageSql = "AND language = 'en'";
+		}
+		else if ($language == "zh")
+		{
+			$languageSql = "AND language = 'zh'";
+		}
 		//取得area列表
 		$tmpRes = $this->db->query("SELECT a.id areaId, a.name areaName, b.name bigAreaName FROM area a JOIN bigArea b ON a.bigArea = b.id ORDER BY b.name, a.name");
 		$areaArray = $tmpRes->result_array();
@@ -36,25 +48,52 @@ class VisitorMain extends CW_Controller
 		//取得课程列表
 		if ($sortType == 'area')
 		{
-			$courseAreaSortList = $this->areaArray;
-			foreach ($courseAreaSortList as &$item)
+			//取得bigArea列表
+			$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY sortOrder");
+			$bigAreaArray = $tmpRes->result_array();
+			foreach ($bigAreaArray as &$bigArea)
 			{
-				//取得当前所属板块课程信息
-				$tmpRes = $this->db->query("SELECT a.id, a.cost, a.introduction, a.list, a.name, a.path, b.name markName FROM course a JOIN mark b ON a.mark = b.id WHERE area = ? ORDER BY b.name, a.name", array($item['areaId']));
-				$item['courseArray'] = $tmpRes->result_array();
+				$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY sortOrder", array($bigArea['id']));
+				$bigArea['areaArray'] = $tmpRes->result_array();
+				foreach ($bigArea['areaArray'] as &$area)
+				{
+					$area['markArray'] = $this->markArray;
+					foreach ($area['markArray'] as &$mark)
+					{
+						$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ".$languageSql." ORDER BY sortOrder", array(
+							$area['id'],
+							$mark['id']
+						));
+						$mark['courseList'] = $tmpRes->result_array();
+					}
+				}
 			}
-			$this->smarty->assign('courseAreaSortList', $courseAreaSortList);
+			$this->smarty->assign('courseAreaSortList', $bigAreaArray);
 		}
 		else if ($sortType == 'mark')
 		{
-			$courseMarkSortList = $this->markArray;
-			foreach ($courseMarkSortList as &$item)
+			//取得mark列表
+			$tmpRes = $this->db->query("SELECT * FROM mark ORDER BY sortOrder");
+			$markArray = $tmpRes->result_array();
+			foreach ($markArray as &$mark)
 			{
-				//取得当前所属标签课程信息
-				$tmpRes = $this->db->query("SELECT a.*, d.name bigAreaName, b.name areaName FROM course a JOIN area b ON a.area = b.id JOIN mark c ON a.mark = c.id JOIN bigArea d ON b.bigArea = d.id WHERE a.mark = ? ORDER BY d.name, b.name, a.name", array($item['id']));
-				$item['courseArray'] = $tmpRes->result_array();
+				$tmpRes = $this->db->query("SELECT * FROM bigArea ORDER BY sortOrder");
+				$mark['bigAreaArray'] = $tmpRes->result_array();
+				foreach ($mark['bigAreaArray'] as &$bigArea)
+				{
+					$tmpRes = $this->db->query("SELECT * FROM area WHERE bigArea = ? ORDER BY sortOrder", array($bigArea['id']));
+					$bigArea['areaArray'] = $tmpRes->result_array();
+					foreach ($bigArea['areaArray'] as &$area)
+					{
+						$tmpRes = $this->db->query("SELECT * FROM course WHERE area = ? AND mark = ? ".$languageSql." ORDER BY sortOrder", array(
+							$area['id'],
+							$mark['id']
+						));
+						$area['courseList'] = $tmpRes->result_array();
+					}
+				}
 			}
-			$this->smarty->assign('courseMarkSortList', $courseMarkSortList);
+			$this->smarty->assign('courseMarkSortList', $markArray);
 		}
 		else
 		{

@@ -22,6 +22,9 @@
 		z-index: 3000;
 		overflow: auto;
 	}
+	.draw {
+		cursor: pointer;
+	}
 </style>
 <!--{/block}-->
 <!--{block name=subScript}-->
@@ -34,6 +37,18 @@
 		}, function()
 		{
 			$(".locNoteDiv", this).hide();
+		});
+		$(".draw").click(function()
+		{
+			$(this).siblings().toggle();
+			if ($(this).children().html() == '&gt;')
+			{
+				$(this).children().html('&lt;');
+			}
+			else
+			{
+				$(this).children().html('&gt;');
+			}
 		});
 	}); 
 </script>
@@ -57,90 +72,127 @@
 		</ul>
 	</div>
 	<div class="span-38">
-		课程列表
+		<div class="span-5">
+			课程列表
+		</div>
+		<div class="span-5">
+			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}">全部</a>
+		</div>
+		<div class="span-5">
+			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/zh">中文</a>
+		</div>
+		<div class="span-5">
+			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/en">英文</a>
+		</div>
 	</div>
 	<div class="span-38 rightBorder">
-		{if $sortType == 'mark'}
-		{foreach $courseMarkSortList as $mark}
-		<div class="span-38">
-			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$mark['name']}</b>
-		</div>
+		{if $sortType == 'area'}
+		{foreach $courseAreaSortList as $bigArea}
 		<div class="prepend-1 span-37">
-			{foreach $mark['courseArray'] as $item}
-			<div class="span-14">
-				{$item['name']}
+			<div class="draw">
+				{$bigArea['name']}<span>></span>
 			</div>
-			<div class="span-12">
-				{$item['bigAreaName']}|{$item['areaName']}
-			</div>
-			<div class="span-5 point">
-				{$item['cost']}点积分
-			</div>
-			<div class="span-3">
-				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
-			</div>
-			<div class="span-3">
-				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
-			</div>
-			<div class="prepend-31 span-6">
-				<div class="span-30 locHolderDiv">
-					<a class="normal" href="#">目录</a>
-					<div class="locNoteDiv">
-						{$item['list']}
-					</div>
+			{foreach $bigArea['areaArray'] as $area}
+			<div class="prepend-1 span-36">
+				<div class="draw">
+					{$area['name']} <span>></span>
 				</div>
-			</div>
-			<div class="prepend-31 span-6">
-				<div class="span-30 locHolderDiv">
-					<a class="normal" href="#">概述</a>
-					<div class="locNoteDiv">
-						{$item['introduction']}
+				{foreach $area['markArray'] as $mark}
+				<div class="prepend-1 span-35">
+					<div class="draw">
+						{$mark['name']} <span>></span>
 					</div>
+					{foreach $mark['courseList'] as $course}
+					<div class="prepend-1 span-34">
+						<div class="span-23">
+							{$course['name']}
+						</div>
+						<div class="span-5 point">
+							{$course['cost']}点积分
+						</div>
+						<div class="span-3">
+							<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$course['id']}" target="_blank">预览</a>
+						</div>
+						<div class="span-3">
+							<a class="normal" href="{site_url('userMain/buyCourse')}/{$course['id']}/{$sortType}">购买</a>
+						</div>
+						<div class="prepend-31 span-6">
+							<div class="span-30 locHolderDiv">
+								<a class="normal" href="#">目录</a>
+								<div class="locNoteDiv">
+									{$course['list']}
+								</div>
+							</div>
+						</div>
+						<div class="prepend-31 span-6">
+							<div class="span-30 locHolderDiv">
+								<a class="normal" href="#">概述</a>
+								<div class="locNoteDiv">
+									{$course['introduction']}
+								</div>
+							</div>
+						</div>
+						<hr>
+					</div>
+					{/foreach}
 				</div>
+				{/foreach}
 			</div>
-			<hr>
 			{/foreach}
 		</div>
 		{/foreach}
-		{else if $sortType == 'area'}
-		{foreach $courseAreaSortList as $area}
-		<div class="span-38">
-			<img src="{base_url()}resource/img/orange.png"/>&nbsp;<b>{$area['bigAreaName']}|{$area['areaName']}</b>
-		</div>
+		{else if $sortType == 'mark'}
+		{foreach $courseMarkSortList as $mark}
 		<div class="prepend-1 span-37">
-			{foreach $area['courseArray'] as $item}
-			<div class="span-14">
-				{$item['name']}
+			<div class="draw">
+				{$mark['name']}<span>></span>
 			</div>
-			<div class="span-12">
-				{$item['markName']}
-			</div>
-			<div class="span-5 point">
-				{$item['cost']}点积分
-			</div>
-			<div class="span-3">
-				<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$item['id']}" target="_blank">预览</a>
-			</div>
-			<div class="span-3">
-				<a class="normal" href="{site_url('userMain/buyCourse')}/{$item['id']}/{$sortType}">购买</a>
-			</div>
-			<div class="prepend-31 span-6">
-				<div class="span-30 locHolderDiv">
-					<a class="normal" href="#">目录</a>
-					<div class="locNoteDiv">
-						{$item['list']}
-					</div>
+			{foreach $mark['bigAreaArray'] as $bigArea}
+			<div class="prepend-1 span-36">
+				<div class="draw">
+					{$bigArea['name']}<span>></span>
 				</div>
-			</div>
-			<div class="prepend-31 span-6">
-				<div class="span-30 locHolderDiv">
-					<a class="normal" href="#">概述</a>
-					<div class="locNoteDiv">
-						{$item['introduction']}
+				{foreach $bigArea['areaArray'] as $area}
+				<div class="prepend-1 span-35">
+					<div class="draw">
+						{$area['name']}<span>></span>
 					</div>
+					{foreach $area['courseList'] as $course}
+					<div class="prepend-1 span-34">
+						<div class="span-23">
+							{$course['name']}
+						</div>
+						<div class="span-5 point">
+							{$course['cost']}点积分
+						</div>
+						<div class="span-3">
+							<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$course['id']}" target="_blank">预览</a>
+						</div>
+						<div class="span-3">
+							<a class="normal" href="{site_url('userMain/buyCourse')}/{$course['id']}/{$sortType}">购买</a>
+						</div>
+						<div class="prepend-31 span-6">
+							<div class="span-30 locHolderDiv">
+								<a class="normal" href="#">目录</a>
+								<div class="locNoteDiv">
+									{$course['list']}
+								</div>
+							</div>
+						</div>
+						<div class="prepend-31 span-6">
+							<div class="span-30 locHolderDiv">
+								<a class="normal" href="#">概述</a>
+								<div class="locNoteDiv">
+									{$course['introduction']}
+								</div>
+							</div>
+						</div>
+						<hr>
+					</div>
+					{/foreach}
 				</div>
+				{/foreach}
 			</div>
-			<hr>
 			{/foreach}
 		</div>
 		{/foreach}
