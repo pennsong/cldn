@@ -38,6 +38,17 @@ class uploaderMain extends CW_Controller
 			array_push($markIdList, $mark['id']);
 			array_push($markNameList, $mark['name']);
 		}
+		//初始化语言选项
+		$languageValue = array(
+			'ch',
+			'en'
+		);
+		$languageName = array(
+			'中文',
+			'英文'
+		);
+		$this->smarty->assign('languageValue', $languageValue);
+		$this->smarty->assign('languageName', $languageName);
 		$this->smarty->assign('markIdList', $markIdList);
 		$this->smarty->assign('markNameList', $markNameList);
 	}
@@ -135,7 +146,7 @@ class uploaderMain extends CW_Controller
 	{
 		$this->_getUploadedFile($sortType);
 		//取得course信息
-		$tmpRes = $this->db->query("SELECT id course, name, area, mark, cost, introduction, list, uploader FROM course WHERE id = ?", array($course));
+		$tmpRes = $this->db->query("SELECT id course, name, language, area, mark, cost, introduction, list, uploader FROM course WHERE id = ?", array($course));
 		$courseInfo = $tmpRes->first_row('array');
 		//检查当前用户是否是文件拥有者
 		if (!(($courseInfo['uploader'] == $this->session->userdata('userId') && $this->session->userdata('type') == 'uploader') || $this->session->userdata('type') == 'admin'))
@@ -211,9 +222,10 @@ class uploaderMain extends CW_Controller
 				{
 					//上传文件成功继续处理文件相关信息
 					$this->db->trans_start();
-					$tmpRes = $this->db->query("INSERT INTO `course`(`uploader`, `name`, `path`, `area`, `mark`, `cost`, `list`, `introduction`, `created`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, null)", array(
+					$tmpRes = $this->db->query("INSERT INTO `course`(`uploader`, `name` ,`language`, `path`, `area`, `mark`, `cost`, `list`, `introduction`, `created`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, null)", array(
 						$this->session->userdata('userId'),
 						$fine_original_name,
+						$this->input->post('language'),
 						$file_name,
 						$this->input->post('area'),
 						$this->input->post('mark'),
@@ -239,7 +251,8 @@ class uploaderMain extends CW_Controller
 			else if ($this->input->post('type') == 'update')
 			{
 				$this->db->trans_start();
-				$tmpRes = $this->db->query("UPDATE `course` SET `area`= ?, `mark`= ?, `cost`= ?, `list`= ?, `introduction`= ? WHERE id = ?", array(
+				$tmpRes = $this->db->query("UPDATE `course` SET `language` = ?, `area`= ?, `mark`= ?, `cost`= ?, `list`= ?, `introduction`= ? WHERE id = ?", array(
+					$this->input->post('language'),
 					$this->input->post('area'),
 					$this->input->post('mark'),
 					$this->input->post('cost'),
@@ -285,6 +298,11 @@ class uploaderMain extends CW_Controller
 			return FALSE;
 		}
 		$config = array_merge($config, array(
+			array(
+				'field'=>'language',
+				'label'=>'语言',
+				'rules'=>'required'
+			),
 			array(
 				'field'=>'area',
 				'label'=>'板块',

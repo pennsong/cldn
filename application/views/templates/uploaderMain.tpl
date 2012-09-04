@@ -53,6 +53,12 @@
 		</div>
 		{/if}
 		<div class="span-38">
+			语言选择:
+		</div>
+		<div class="prepend-1 span-37">
+			<!--{html_radios name='language' values=$languageValue output=$languageName selected=$smarty.post.language|default:'' separator="<br />"}-->
+		</div>
+		<div class="span-38">
 			板块选择:
 		</div>
 		<div class="prepend-1 span-37">
