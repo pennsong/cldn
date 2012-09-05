@@ -32,7 +32,7 @@
 			<input type="submit" value="保存">
 		</div>
 		<div class="span-10 last">
-			<a href="{site_url('userMain')}">取消</a>
+			<a href="{site_url('uploaderMain')}">取消</a>
 		</div>
 	</form>
 </div>

@@ -77,7 +77,7 @@ class Login extends CW_Controller
 			array(
 				'field'=>'userName',
 				'label'=>'用户名',
-				'rules'=>'required|callback_checkUsername1|callback_checkUsername2|callback_checkUsername3'
+				'rules'=>'required|alpha_numeric|min_length[6]|max_length[20]'
 			),
 			array(
 				'field'=>'password',
