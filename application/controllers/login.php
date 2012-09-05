@@ -155,38 +155,63 @@ class Login extends CW_Controller
 		}
 		else if ($this->input->post('type') == 1)
 		{
-			$tmpRes = $this->db->query('SELECT * FROM user WHERE userName = ?', strtolower($this->input->post('userName')));
+			//删除同一id登录的其他session
+			$tmpRes = $this->db->query("DELETE FROM ci_sessions WHERE username=? AND userType='user'", array(strtolower($this->input->post('userName'))));
 			if ($tmpRes)
 			{
-				if ($tmpRes->num_rows() > 0)
+				$tmpRes = $this->db->query('SELECT * FROM user WHERE userName = ?', strtolower($this->input->post('userName')));
+				if ($tmpRes)
 				{
-					$tmpArr = $tmpRes->first_row('array');
-					if ($tmpArr['password'] == strtolower($this->input->post('password')))
+					if ($tmpRes->num_rows() > 0)
 					{
-						$this->session->set_userdata('userName', strtolower($this->input->post('userName')));
-						$this->session->set_userdata('userId', $tmpArr['id']);
-						$this->session->set_userdata('type', 'user');
-						$this->session->set_userdata('point', $tmpArr['point']);
-						return TRUE;
+						$tmpArr = $tmpRes->first_row('array');
+						if ($tmpArr['password'] == strtolower($this->input->post('password')))
+						{
+							$this->session->set_userdata('userName', strtolower($this->input->post('userName')));
+							$this->session->set_userdata('userId', $tmpArr['id']);
+							$this->session->set_userdata('type', 'user');
+							$this->session->set_userdata('point', $tmpArr['point']);
+							//插入用户名,用户类型,为防止一个id多个地方同时登录做准备
+							$tmpRes = $this->db->query("UPDATE ci_sessions SET username=?, userType='user' WHERE session_id=?", array(
+								strtolower($this->input->post('userName')),
+								$this->session->userdata('session_id')
+							));
+							if ($tmpRes)
+							{
+								return TRUE;
+							}
+							else
+							{
+								//创建session失败
+								$var = "*系统忙碌,请重试";
+								return FALSE;
+							}
+						}
+						else
+						{
+							//密码错误
+							$var = "*密码错误，请仔细检查";
+							return FALSE;
+						}
 					}
 					else
 					{
-						//密码错误
-						$var = "*密码错误，请仔细检查";
+						//用户名不存在
+						$var = "*无此用户,请重新输入";
 						return FALSE;
 					}
 				}
 				else
 				{
-					//用户名不存在
-					$var = "*无此用户,请重新输入";
+					//查询失败
+					$var = "*系统繁忙，请稍后尝试进入";
 					return FALSE;
 				}
 			}
 			else
 			{
-				//查询失败
-				$var = "*系统繁忙，请稍后尝试进入";
+				//删除同一id登录的session失败
+				$var = "*系统忙碌,请重试";
 				return FALSE;
 			}
 		}
