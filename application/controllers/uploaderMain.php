@@ -134,6 +134,85 @@ class uploaderMain extends CW_Controller
 		}
 	}
 
+	public function changePassword()
+	{
+		$this->load->library('form_validation');
+		$this->smarty->display('uploaderOrAdminChangePassword.tpl');
+	}
+
+	public function updatePassword()
+	{
+		$this->lang->load('form_validation', 'chinese');
+		$this->load->library('form_validation');
+		$config = array(
+			array(
+				'field'=>'oldPassword',
+				'label'=>'旧密码',
+				'rules'=>'required|callback_checkOldPassword'
+			),
+			array(
+				'field'=>'newPassword',
+				'label'=>'新密码',
+				'rules'=>'required|alpha_numeric|min_length[6]|max_length[20]'
+			),
+			array(
+				'field'=>'newPasswordConfirm',
+				'label'=>'新密码确认',
+				'rules'=>'required|matches[newPassword]'
+			)
+		);
+		$this->form_validation->set_rules($config);
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->smarty->display('uploaderOrAdminChangePassword.tpl');
+		}
+		else
+		{
+			//保存新密码
+			if ($this->session->userdata('type') == 'uploader')
+			{
+				$tmpRes = $this->db->query("UPDATE uploader SET password=? WHERE id=?", array(
+					$this->input->post('newPassword'),
+					$this->session->userdata('userId')
+				));
+			}
+			else if ($this->session->userdata('type') == 'admin')
+			{
+				$tmpRes = $this->db->query("UPDATE admin SET password=? WHERE id=?", array(
+					$this->input->post('newPassword'),
+					$this->session->userdata('userId')
+				));
+			}
+			$this->smarty->assign('msg', '<span class="ok1">密码修改成功!</span>');
+			$this->index();
+		}
+	}
+
+	public function checkOldPassword($oldPassword)
+	{
+		if ($this->session->userdata('type') == 'uploader')
+		{
+			$tmpTable = 'uploader';
+		}
+		else if ($this->session->userdata('type') == 'admin')
+		{
+			$tmpTable = 'admin';
+		}
+		$tmpRes = $this->db->query("SELECT COUNT(*) num FROM ".$tmpTable." WHERE id=? AND password=?", array(
+			$this->session->userdata('userId'),
+			$oldPassword
+		));
+		if ($tmpRes->first_row()->num > 0)
+		{
+			return TRUE;
+		}
+		else
+		{
+			$this->form_validation->set_message('checkOldPassword', '%s 错误');
+			return FALSE;
+		}
+	}
+
 	public function index($sortType = 'area')
 	{
 		$this->_getUploadedFile($sortType);

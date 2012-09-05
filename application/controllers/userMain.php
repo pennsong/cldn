@@ -46,6 +46,66 @@ class userMain extends CW_Controller
 		$this->smarty->assign('markNameList', $markNameList);
 	}
 
+	public function changePassword()
+	{
+		$this->load->library('form_validation');
+		$this->smarty->display('userChangePassword.tpl');
+	}
+
+	public function updatePassword()
+	{
+		$this->lang->load('form_validation', 'chinese');
+		$this->load->library('form_validation');
+		$config = array(
+			array(
+				'field'=>'oldPassword',
+				'label'=>'旧密码',
+				'rules'=>'required|callback_checkOldPassword'
+			),
+			array(
+				'field'=>'newPassword',
+				'label'=>'新密码',
+				'rules'=>'required|alpha_numeric|min_length[6]|max_length[20]'
+			),
+			array(
+				'field'=>'newPasswordConfirm',
+				'label'=>'新密码确认',
+				'rules'=>'required|matches[newPassword]'
+			)
+		);
+		$this->form_validation->set_rules($config);
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->smarty->display('userChangePassword.tpl');
+		}
+		else
+		{
+			//保存新密码
+			$tmpRes = $this->db->query("UPDATE user SET password=? WHERE id=?", array(
+				$this->input->post('newPassword'),
+				$this->session->userdata('userId')
+			));
+			$this->_return('密码修改成功!', 'ok1', 'area');
+		}
+	}
+
+	public function checkOldPassword($oldPassword)
+	{
+		$tmpRes = $this->db->query("SELECT COUNT(*) num FROM USER WHERE id=? AND password=?", array(
+			$this->session->userdata('userId'),
+			$oldPassword
+		));
+		if ($tmpRes->first_row()->num > 0)
+		{
+			return TRUE;
+		}
+		else
+		{
+			$this->form_validation->set_message('checkOldPassword', '%s 错误');
+			return FALSE;
+		}
+	}
+
 	public function index($sortType = 'area', $language = "all")
 	{
 		$languageSql = '';
