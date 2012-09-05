@@ -76,13 +76,13 @@
 			课程列表
 		</div>
 		<div class="span-5">
-			<a href="{site_url('userMain/index/')}/{$sortType}">全部</a>
+			<a href="{site_url('userMain/index/')}/{$sortType}">All</a>
 		</div>
 		<div class="span-5">
 			<a href="{site_url('userMain/index/')}/{$sortType}/zh">中文</a>
 		</div>
 		<div class="span-5">
-			<a href="{site_url('userMain/index/')}/{$sortType}/en">英文</a>
+			<a href="{site_url('userMain/index/')}/{$sortType}/en">En</a>
 		</div>
 	</div>
 	<div class="span-38 rightBorder">

@@ -76,13 +76,13 @@
 			课程列表
 		</div>
 		<div class="span-5">
-			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}">全部</a>
+			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}">All</a>
 		</div>
 		<div class="span-5">
 			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/zh">中文</a>
 		</div>
 		<div class="span-5">
-			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/en">英文</a>
+			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/en">En</a>
 		</div>
 	</div>
 	<div class="span-38 rightBorder">

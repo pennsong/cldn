@@ -80,6 +80,14 @@
 			<!--{html_radios name='area' values=$areaIdList output=$areaNameList selected=$smarty.post.area|default:'' separator="<br />"}-->
 		</div>
 		<div class="span-38">
+			排序(数字小的排在前面):
+			{if $CI->session->userdata('type') == 'admin'}
+			<input name="sortOrder" value="{$smarty.post.sortOrder|default:'0'}" readonly="readonly" />
+			{else}
+			<input name="sortOrder" value="{$smarty.post.sortOrder|default:'0'}" />
+			{/if}
+		</div>
+		<div class="span-38">
 			标签选择:
 		</div>
 		<div class="prepend-1 span-37">
