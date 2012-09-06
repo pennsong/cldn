@@ -116,9 +116,9 @@ class userMain extends CW_Controller
 		{
 			$languageSql = "AND language = 'en'";
 		}
-		else if ($language == "zh")
+		else if ($language == "ch")
 		{
-			$languageSql = "AND language = 'zh'";
+			$languageSql = "AND language = 'ch'";
 		}
 		//取得课程列表
 		if ($sortType == 'area')

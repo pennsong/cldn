@@ -79,7 +79,7 @@
 			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}">All</a>
 		</div>
 		<div class="span-5">
-			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/zh">中文</a>
+			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/ch">中文</a>
 		</div>
 		<div class="span-5">
 			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/en">En</a>

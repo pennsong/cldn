@@ -15,9 +15,9 @@ class VisitorMain extends CW_Controller
 		{
 			$languageSql = "AND language = 'en'";
 		}
-		else if ($language == "zh")
+		else if ($language == "ch")
 		{
-			$languageSql = "AND language = 'zh'";
+			$languageSql = "AND language = 'ch'";
 		}
 		//取得area列表
 		$tmpRes = $this->db->query("SELECT a.id areaId, a.name areaName, b.name bigAreaName FROM area a JOIN bigArea b ON a.bigArea = b.id ORDER BY b.name, a.name");
