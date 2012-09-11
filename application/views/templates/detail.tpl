@@ -7,7 +7,7 @@
 <div class="prepend-top span-64 last">
 	<div>
 		<div>
-			<b>课程名称</b>
+			<b>课程名称(name)</b>
 		</div>
 		<div>
 			{$course['name']}
@@ -16,7 +16,7 @@
 	<hr>
 	<div>
 		<div>
-			<b>目录</b>
+			<b>目录(table of content)</b>
 		</div>
 		<div>
 			{$course['list']}
@@ -25,7 +25,7 @@
 	<hr>
 	<div>
 		<div>
-			<b>概要</b>
+			<b>概要(summary)</b>
 		</div>
 		<div>
 			{$course['introduction']}
