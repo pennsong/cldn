@@ -300,6 +300,20 @@ class Login extends CW_Controller
 		$this->smarty->display('loginHelp.tpl');
 	}
 
+	public function detail($course)
+	{
+		$tmpRes = $this->db->query("SELECT * FROM course WHERE id = ?", array($course));
+		if ($tmpRes->num_rows() > 0)
+		{
+			$this->smarty->assign("course", $tmpRes->first_row('array'));
+			$this->smarty->display('detail.tpl');
+		}
+		else
+		{
+			show_error('无此课程');
+		}
+	}
+
 }
 
 /*end*/

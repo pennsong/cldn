@@ -25,6 +25,22 @@
 	.draw {
 		cursor: pointer;
 	}
+	.close {
+		width: 8px;
+		height: 8px
+	}
+	.open {
+		width: 8px;
+		height: 8px
+	}
+	.expand {
+		display: none
+	}
+	.odd {
+		background: #FFFFFF;
+	}
+	.even {
+	}
 </style>
 <!--{/block}-->
 <!--{block name=subScript}-->
@@ -41,13 +57,15 @@
 		$(".draw").click(function()
 		{
 			$(this).siblings().toggle();
-			if ($(this).children().html() == '&gt;')
+			if ($(this).children().attr('class') == 'close')
 			{
-				$(this).children().html('&lt;');
+				$(this).children().attr('class', 'open');
+				$(this).children().attr('src', '{base_url()}resource/img/open.png');
 			}
 			else
 			{
-				$(this).children().html('&gt;');
+				$(this).children().attr('class', 'close');
+				$(this).children().attr('src', '{base_url()}resource/img/close.png');
 			}
 		});
 	}); 
@@ -90,32 +108,32 @@
 		{foreach $courseAreaSortList as $bigArea}
 		<div class="prepend-1 span-37">
 			<div class="draw">
-				{$bigArea['name']}<span>></span>
+				<img class="open" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
 			</div>
 			{foreach $bigArea['areaArray'] as $area}
-			<div class="prepend-1 span-36">
+			<div class="prepend-1 span-36 expand">
 				<div class="draw">
-					{$area['name']} <span>></span>
+					<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
 				</div>
 				{foreach $area['markArray'] as $mark}
-				<div class="prepend-1 span-35">
+				<div class="prepend-1 span-35 expand">
 					<div class="draw">
-						{$mark['name']} <span>></span>
+						<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
 					</div>
 					{foreach $mark['courseList'] as $course}
-					<div class="prepend-1 span-34">
+					<div class="prepend-1 span-34 expand {cycle values='odd,even' name=$mark['name']}">
 						<div class="span-23">
-							<!--{if $course['bought'] == 'no'}-->
-							<!--{$course['name']}-->
-							<!--{elseif $course['bought'] == 'yes'}-->
-							<a class="normal" href="{site_url('FPView/viewAll')}/{$course['id']}" target="_blank">{$course['name']}</a>
-							<!--{/if}-->
+							<a class="normal" href="{site_url('login/detail')}/{$course['id']}" target="_blank">{$course['name']}</a>
 						</div>
 						<div class="span-5 point">
 							{$course['cost']}点积分
 						</div>
 						<div class="span-3">
+							<!--{if $course['bought'] == 'yes'}-->
+							<a class="normal" href="{site_url('FPView/viewAll')}/{$course['id']}" target="_blank">阅读</a>
+							<!--{elseif $course['bought'] == 'no'}-->
 							<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$course['id']}" target="_blank">预览</a>
+							<!--{/if}-->
 						</div>
 						<div class="span-3">
 							<!--{if $course['bought'] == 'yes'}-->
@@ -124,23 +142,6 @@
 							<a class="normal" href="{site_url('userMain/buyCourse')}/{$course['id']}/{$sortType}">购买</a>
 							<!--{/if}-->
 						</div>
-						<div class="prepend-31 span-6">
-							<div class="span-30 locHolderDiv">
-								<a class="normal" href="#">目录</a>
-								<div class="locNoteDiv">
-									{$course['list']}
-								</div>
-							</div>
-						</div>
-						<div class="prepend-31 span-6">
-							<div class="span-30 locHolderDiv">
-								<a class="normal" href="#">概述</a>
-								<div class="locNoteDiv">
-									{$course['introduction']}
-								</div>
-							</div>
-						</div>
-						<hr>
 					</div>
 					{/foreach}
 				</div>
@@ -153,32 +154,32 @@
 		{foreach $courseMarkSortList as $mark}
 		<div class="prepend-1 span-37">
 			<div class="draw">
-				{$mark['name']}<span>></span>
+				<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
 			</div>
 			{foreach $mark['bigAreaArray'] as $bigArea}
-			<div class="prepend-1 span-36">
+			<div class="prepend-1 span-36 expand">
 				<div class="draw">
-					{$bigArea['name']}<span>></span>
+					<img class="open" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
 				</div>
 				{foreach $bigArea['areaArray'] as $area}
-				<div class="prepend-1 span-35">
+				<div class="prepend-1 span-35 expand">
 					<div class="draw">
-						{$area['name']}<span>></span>
+						<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
 					</div>
 					{foreach $area['courseList'] as $course}
-					<div class="prepend-1 span-34">
+					<div class="prepend-1 span-34 expand {cycle values='odd,even' name=$area['name']}">
 						<div class="span-23">
-							<!--{if $course['bought'] == 'no'}-->
-							<!--{$course['name']}-->
-							<!--{elseif $course['bought'] == 'yes'}-->
-							<a class="normal" href="{site_url('FPView/viewAll')}/{$course['id']}" target="_blank">{$course['name']}</a>
-							<!--{/if}-->
+							<a class="normal" href="{site_url('login/detail')}/{$course['id']}" target="_blank">{$course['name']}</a>
 						</div>
 						<div class="span-5 point">
 							{$course['cost']}点积分
 						</div>
 						<div class="span-3">
+							<!--{if $course['bought'] == 'yes'}-->
+							<a class="normal" href="{site_url('FPView/viewAll')}/{$course['id']}" target="_blank">阅读</a>
+							<!--{elseif $course['bought'] == 'no'}-->
 							<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$course['id']}" target="_blank">预览</a>
+							<!--{/if}-->
 						</div>
 						<div class="span-3">
 							<!--{if $course['bought'] == 'yes'}-->
@@ -187,23 +188,6 @@
 							<a class="normal" href="{site_url('userMain/buyCourse')}/{$course['id']}/{$sortType}">购买</a>
 							<!--{/if}-->
 						</div>
-						<div class="prepend-31 span-6">
-							<div class="span-30 locHolderDiv">
-								<a class="normal" href="#">目录</a>
-								<div class="locNoteDiv">
-									{$course['list']}
-								</div>
-							</div>
-						</div>
-						<div class="prepend-31 span-6">
-							<div class="span-30 locHolderDiv">
-								<a class="normal" href="#">概述</a>
-								<div class="locNoteDiv">
-									{$course['introduction']}
-								</div>
-							</div>
-						</div>
-						<hr>
 					</div>
 					{/foreach}
 				</div>
