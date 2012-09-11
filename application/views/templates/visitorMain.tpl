@@ -42,6 +42,18 @@
 	.even {
 		background: #EEEEEE;
 	}
+	.level1 {
+		font-weight: bolder;
+		color: #000000;
+	}
+	.level2 {
+		font-weight: bolder;
+		color: #888888;
+	}
+	.level3 {
+		font-weight: bolder;
+		color: #9ACC9A;
+	}
 </style>
 <!--{/block}-->
 <!--{block name=subScript}-->
@@ -108,17 +120,17 @@
 		{if $sortType == 'area'}
 		{foreach $courseAreaSortList as $bigArea}
 		<div class="prepend-1 span-37">
-			<div class="draw">
+			<div class="draw level1">
 				<img class="open" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
 			</div>
 			{foreach $bigArea['areaArray'] as $area}
 			<div class="prepend-1 span-36 expand">
-				<div class="draw">
+				<div class="draw level2">
 					<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
 				</div>
 				{foreach $area['markArray'] as $mark}
 				<div class="prepend-1 span-35 expand">
-					<div class="draw">
+					<div class="draw level3">
 						<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
 					</div>
 					{foreach $mark['courseList'] as $course}
@@ -143,17 +155,17 @@
 		{else if $sortType == 'mark'}
 		{foreach $courseMarkSortList as $mark}
 		<div class="prepend-1 span-37">
-			<div class="draw">
+			<div class="draw level1">
 				<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
 			</div>
 			{foreach $mark['bigAreaArray'] as $bigArea}
 			<div class="prepend-1 span-36 expand">
-				<div class="draw">
+				<div class="draw level2">
 					<img class="open" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
 				</div>
 				{foreach $bigArea['areaArray'] as $area}
 				<div class="prepend-1 span-35 expand">
-					<div class="draw">
+					<div class="draw level3">
 						<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
 					</div>
 					{foreach $area['courseList'] as $course}
