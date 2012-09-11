@@ -40,6 +40,7 @@
 		background: #FFFFFF;
 	}
 	.even {
+		background: #EEEEEE;
 	}
 </style>
 <!--{/block}-->
@@ -121,7 +122,7 @@
 						<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
 					</div>
 					{foreach $mark['courseList'] as $course}
-					<div class="prepend-1 span-34 expand {cycle values='odd,even' name=$mark['name']}">
+					<div class="prepend-1 span-34 expand {cycle values='odd,even'}">
 						<div class="span-23">
 							<a class="normal" href="{site_url('login/detail')}/{$course['id']}" target="_blank">{$course['name']}</a>
 						</div>
@@ -156,7 +157,7 @@
 						<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
 					</div>
 					{foreach $area['courseList'] as $course}
-					<div class="prepend-1 span-34 expand {cycle values='odd,even' name=$area['name']}">
+					<div class="prepend-1 span-34 expand {cycle values='odd,even'}">
 						<div class="span-23">
 							<a class="normal" href="{site_url('login/detail')}/{$course['id']}" target="_blank">{$course['name']}</a>
 						</div>
