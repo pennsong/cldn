@@ -87,7 +87,7 @@
 			var course = tempA.attr('course');
 			$.ajax(
 			{
-				url : "{site_url('userMain/buyCourse/')}" + '/' + course,
+				url : "{site_url('userMain/buyCourse/')}" + '/' + course
 			}).done(function(data)
 			{
 				if (data == 'ok')
