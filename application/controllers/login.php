@@ -159,7 +159,7 @@ class Login extends CW_Controller
 			$tmpRes = $this->db->query("DELETE FROM ci_sessions WHERE username=? AND userType='user'", array(strtolower($this->input->post('userName'))));
 			if ($tmpRes)
 			{
-				$tmpRes = $this->db->query('SELECT * FROM user WHERE userName = ?', strtolower($this->input->post('userName')));
+				$tmpRes = $this->db->query('SELECT * FROM user WHERE userName = ? AND expiration >= DATE(NOW())', strtolower($this->input->post('userName')));
 				if ($tmpRes)
 				{
 					if ($tmpRes->num_rows() > 0)
@@ -197,7 +197,7 @@ class Login extends CW_Controller
 					else
 					{
 						//用户名不存在
-						$var = "*无此用户,请重新输入";
+						$var = "*无此用户,或用户已过期,请重新输入";
 						return FALSE;
 					}
 				}

@@ -81,6 +81,29 @@
 				$(this).children().attr('src', '{base_url()}resource/img/close.png');
 			}
 		});
+		$(".buy > a").click(function()
+		{
+			var tempA = $(this);
+			var course = tempA.attr('course');
+			$.ajax(
+			{
+				url : "{site_url('userMain/buyCourse/')}" + '/' + course,
+			}).done(function(data)
+			{
+				if (data == 'ok')
+				{
+					alert('购买成功!');
+					var href = "{site_url('FPView/viewAll')}/" + course;
+					var str = '<a class="normal" href="' + href + '" target="_blank">阅读</a>';
+					tempA.parent().prev('.read').html(str);
+					tempA.parent().html('<span>已购买</span>');
+				}
+				else
+				{
+					alert(data);
+				}
+			});
+		});
 	}); 
 </script>
 <!--{/block}-->
@@ -141,18 +164,18 @@
 						<div class="span-5 point">
 							{$course['cost']}点积分
 						</div>
-						<div class="span-3">
+						<div class="span-3 read">
 							<!--{if $course['bought'] == 'yes'}-->
 							<a class="normal" href="{site_url('FPView/viewAll')}/{$course['id']}" target="_blank">阅读</a>
 							<!--{elseif $course['bought'] == 'no'}-->
 							<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$course['id']}" target="_blank">预览</a>
 							<!--{/if}-->
 						</div>
-						<div class="span-3">
+						<div class="span-3 buy">
 							<!--{if $course['bought'] == 'yes'}-->
 							<span>已购买</span>
 							<!--{elseif $course['bought'] == 'no'}-->
-							<a class="normal" href="{site_url('userMain/buyCourse')}/{$course['id']}/{$sortType}">购买</a>
+							<a class="normal" course="{$course['id']}">购买</a>
 							<!--{/if}-->
 						</div>
 					</div>
@@ -187,18 +210,18 @@
 						<div class="span-5 point">
 							{$course['cost']}点积分
 						</div>
-						<div class="span-3">
+						<div class="span-3 read">
 							<!--{if $course['bought'] == 'yes'}-->
 							<a class="normal" href="{site_url('FPView/viewAll')}/{$course['id']}" target="_blank">阅读</a>
 							<!--{elseif $course['bought'] == 'no'}-->
 							<a class="normal" href="{site_url('FPView/noLogin_preview')}/{$course['id']}" target="_blank">预览</a>
 							<!--{/if}-->
 						</div>
-						<div class="span-3">
+						<div class="span-3 buy">
 							<!--{if $course['bought'] == 'yes'}-->
 							<span>已购买</span>
 							<!--{elseif $course['bought'] == 'no'}-->
-							<a class="normal" href="{site_url('userMain/buyCourse')}/{$course['id']}/{$sortType}">购买</a>
+							<a class="normal" course="{$course['id']}">购买</a>
 							<!--{/if}-->
 						</div>
 					</div>

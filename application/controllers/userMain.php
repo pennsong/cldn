@@ -181,7 +181,7 @@ class userMain extends CW_Controller
 		$this->smarty->display('userMain.tpl');
 	}
 
-	public function buyCourse($course, $sortType)
+	public function buyCourse($course)
 	{
 		//检查是否此课程还在有效期内
 		$tmpRes = $this->db->query("SELECT COUNT(*) num FROM userBuyCourse WHERE course = ? AND expiration >= DATE(NOW()) AND user = ?", array(
@@ -191,7 +191,7 @@ class userMain extends CW_Controller
 		if ($tmpRes->first_row()->num > 0)
 		{
 			//购买课程还在有效期内
-			$this->_return("购买失败!(您已购买过此教程,还未过期,无需购买.)", ".error1", $sortType);
+			echo "购买失败!(您已购买过此教程,还未过期,无需购买.)";
 		}
 		else
 		{
@@ -206,7 +206,7 @@ class userMain extends CW_Controller
 			{
 				$this->db->trans_start();
 				//添加购买记录
-				$tmpRes = $this->db->query("INSERT INTO `userBuyCourse`(`user`, `course`, `expiration`, `created`) VALUES (?, ?, DATE(NOW( ))+INTERVAL 3 MONTH, NULL)", array(
+				$tmpRes = $this->db->query("INSERT INTO `userBuyCourse`(`user`, `course`, `expiration`, `created`) VALUES (?, ?, DATE(NOW( ))+INTERVAL 1 YEAR, NULL)", array(
 					$this->session->userdata('userId'),
 					$course
 				));
@@ -221,23 +221,23 @@ class userMain extends CW_Controller
 					{
 						$this->db->trans_commit();
 						$this->session->set_userdata('point', ($point - $cost));
-						$this->_return("购买成功!", ".ok1", $sortType);
+						echo 'ok';
 					}
 					else
 					{
 						$this->db->trans_rollback();
-						$this->_return("购买失败!(扣除积分失败,请重试)", ".error1", $sortType);
+						echo "购买失败!(扣除积分失败,请重试)";
 					}
 				}
 				else
 				{
 					$this->db->trans_rollback();
-					$this->_return("购买失败!(添加购买记录失败,请重试)", ".error1", $sortType);
+					echo "购买失败!(添加购买记录失败,请重试)";
 				}
 			}
 			else
 			{
-				$this->_return("购买失败!(积分不够,请联系客服充值后购买)", ".error1", $sortType);
+				echo "购买失败!(积分不够,请联系客服充值后购买)";
 			}
 		}
 	}
