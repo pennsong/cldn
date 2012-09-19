@@ -131,7 +131,7 @@
 							{html_radios name='type' values=$typeId output=$typeName labels=FALSE selected=$type|default:1}
 						</div>
 					</div>
-					<div class="clearÏ">
+					<div class="clear">
 						<div class="inline span-3">
 							<button id="loginButton" class="button1" type="submit">
 								登录
@@ -140,6 +140,11 @@
 						<div class="span-10 locGeneralErrorInfo">
 							<span class="error1">{$loginErrorInfo|default:''}</span>
 						</div>
+					</div>
+					<div class="clear">
+						<!--{if isset($noticeTitle)}-->
+						<a href="{site_url('login/getNotice')}" target='_blank'>{$noticeTitle}</a>
+						<!--{/if}-->
 					</div>
 				</form>
 			</div>

@@ -102,6 +102,25 @@ class AddUser extends CW_Controller
 		$this->smarty->display('addUser.tpl');
 	}
 
+	public function notice()
+	{
+		$crud = new grocery_CRUD();
+		$crud->set_theme('datatables');
+		$crud->columns('title', 'body');
+		$crud->fields('title', 'body');
+		$crud->required_fields('title', 'body');
+		$crud->display_as('body', '通知内容')->display_as('title', '标题');
+		$crud->unset_add();
+		$crud->unset_delete();
+		$output = $crud->render();
+		foreach ($output as $key=>$value)
+		{
+			$this->smarty->assign($key, $value);
+		}
+		$this->smarty->assign('title', '通知');
+		$this->smarty->display('addUser.tpl');
+	}
+
 }
 
 /*end*/

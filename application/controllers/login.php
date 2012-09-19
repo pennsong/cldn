@@ -28,6 +28,14 @@ class Login extends CW_Controller
 		{
 			$this->smarty->assign('type', $this->input->cookie('type'));
 		}
+		//取得通知内容
+		$noticeTitle = null;
+		$tmpRes = $this->db->query("SELECT * FROM notice");
+		if ($tmpRes)
+		{
+			$noticTitle = $tmpRes->first_row()->title;
+		}
+		$this->smarty->assign('noticeTitle', $noticTitle);
 		$this->smarty->display('login.tpl');
 	}
 
@@ -311,6 +319,20 @@ class Login extends CW_Controller
 		else
 		{
 			show_error('无此课程');
+		}
+	}
+
+	public function getNotice()
+	{
+		$tmpRes = $this->db->query("SELECT * FROM notice");
+		if ($tmpRes->num_rows() > 0)
+		{
+			$this->smarty->assign("notice", $tmpRes->first_row('array'));
+			$this->smarty->display('notice.tpl');
+		}
+		else
+		{
+			show_error('无通知');
 		}
 	}
 

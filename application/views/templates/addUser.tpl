@@ -26,6 +26,9 @@
 		<div class="prepend-1 span-5">
 			<a href="{site_url('addUser/admin')}">超级管理员</a>
 		</div>
+		<div class="prepend-1 span-5">
+			<a href="{site_url('addUser/notice')}">通知</a>
+		</div>
 	</div>
 </div>
 <div class="span-64 last">
