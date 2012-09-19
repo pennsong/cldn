@@ -22,6 +22,9 @@
 		z-index: 3000;
 		overflow: auto;
 	}
+	.red {
+		color: red
+	}
 	.draw {
 		cursor: pointer;
 	}
@@ -60,6 +63,36 @@
 <script>
 	$(document).ready(function()
 	{
+		function nodeToggle(node)
+		{
+			if (node.children().attr('class') == 'close')
+			{
+				node.children().attr('class', 'open');
+				node.children().attr('src', '{base_url()}resource/img/close.png');
+			}
+			else
+			{
+				node.children().attr('class', 'close');
+				node.children().attr('src', '{base_url()}resource/img/open.png');
+			}
+			node.siblings().toggle();
+		}
+
+		function nodeOpen(node)
+		{
+			node.siblings().show();
+			node.children().attr('class', 'open');
+			node.children().attr('src', '{base_url()}resource/img/close.png');
+		}
+
+		function nodeClose(node)
+		{
+			node.siblings().hide();
+			node.children().attr('class', 'close');
+			node.children().attr('src', '{base_url()}resource/img/open.png');
+		}
+
+
 		$(".locHolderDiv").hover(function()
 		{
 			$(".locNoteDiv", this).show();
@@ -69,25 +102,30 @@
 		});
 		$(".draw").click(function()
 		{
-			$(this).siblings().toggle();
-			if ($(this).children().attr('class') == 'close')
-			{
-				$(this).children().attr('class', 'open');
-				$(this).children().attr('src', '{base_url()}resource/img/open.png');
-			}
-			else
-			{
-				$(this).children().attr('class', 'close');
-				$(this).children().attr('src', '{base_url()}resource/img/close.png');
-			}
+			nodeToggle($(this));
 		});
+		$("#openAll").click(function(event)
+		{
+			event.preventDefault();
+			nodeOpen($(".draw"));
+		});
+		$("#closeAll").click(function(event)
+		{
+			event.preventDefault();
+			nodeClose($(".draw"));
+		});
+		//初始打开第一层菜单
+		nodeToggle($(".level1"));
 	}); 
 </script>
 <!--{/block}-->
 <!--{block name=subBody}-->
 <div class="prepend-1 span-38">
-	<div class="span-38">
+	<div class="span-38 last">
 		{$msg|default:""}
+	</div>
+	<div class="span-38 last">
+		<span class="red">*本网站主要提供通用的业务和技术培训课程，如需根据贵公司的实际业务定制专门的培训课程，请联系华钦软件技术咨询服务部（负责人：何耀威， 邮箱：<a href="mailto:filip.ho@clps.com.cn">filip.ho@clps.com.cn</a>）</span>
 	</div>
 	<div class="span-38">
 		<span class="cldnH1">培训课程:</span>
@@ -115,23 +153,29 @@
 		<div class="span-5">
 			<a href="{site_url('visitorMain/noLogin_index/')}/{$sortType}/en">En</a>
 		</div>
+		<div id="openAll" class="span-5">
+			<a href="#">全部展开</a>
+		</div>
+		<div id="closeAll" class="span-5">
+			<a href="#">全部收起</a>
+		</div>
 	</div>
 	<div class="span-38 rightBorder">
 		{if $sortType == 'area'}
 		{foreach $courseAreaSortList as $bigArea}
 		<div class="prepend-1 span-37">
 			<div class="draw level1">
-				<img class="open" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
+				<img class="close" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
 			</div>
 			{foreach $bigArea['areaArray'] as $area}
 			<div class="prepend-1 span-36 expand">
 				<div class="draw level2">
-					<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
+					<img class="close" src='{base_url()}resource/img/open.png' />{$area['name']}
 				</div>
 				{foreach $area['markArray'] as $mark}
 				<div class="prepend-1 span-35 expand">
 					<div class="draw level3">
-						<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
+						<img class="close" src='{base_url()}resource/img/open.png' />{$mark['name']}
 					</div>
 					{foreach $mark['courseList'] as $course}
 					<div class="prepend-1 span-34 expand {cycle values='odd,even'}">
@@ -156,17 +200,17 @@
 		{foreach $courseMarkSortList as $mark}
 		<div class="prepend-1 span-37">
 			<div class="draw level1">
-				<img class="open" src='{base_url()}resource/img/open.png' />{$mark['name']}
+				<img class="close" src='{base_url()}resource/img/open.png' />{$mark['name']}
 			</div>
 			{foreach $mark['bigAreaArray'] as $bigArea}
 			<div class="prepend-1 span-36 expand">
 				<div class="draw level2">
-					<img class="open" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
+					<img class="close" src='{base_url()}resource/img/open.png' />{$bigArea['name']}
 				</div>
 				{foreach $bigArea['areaArray'] as $area}
 				<div class="prepend-1 span-35 expand">
 					<div class="draw level3">
-						<img class="open" src='{base_url()}resource/img/open.png' />{$area['name']}
+						<img class="close" src='{base_url()}resource/img/open.png' />{$area['name']}
 					</div>
 					{foreach $area['courseList'] as $course}
 					<div class="prepend-1 span-34 expand {cycle values='odd,even'}">

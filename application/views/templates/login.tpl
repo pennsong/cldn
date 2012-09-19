@@ -82,115 +82,108 @@
 			<div class="span-64 last">
 				  <img class="" src="{base_url()}resource/img/logo.png"/>
 			</div>
-			<div class="clear prepend-19 last append-bottom20">
-				<div>
-					<span class="cldnH1">金融与技术知识学院</span>
+			<div class="span-20">
+				<div class="clear append-bottom20">
+					<div>
+						<span class="cldnH1">金融与技术知识学院</span>
+					</div>
+					<div>
+						<span class="cldnH1">Financial IT Academy</span>
+					</div>
 				</div>
-				<div>
-					<span class="cldnH1">Financial IT Academy</span>
-				</div>
+				<form id="locLoginForm" action="{site_url('login/validateLogin')}" method="post">
+					<div class="clear append-bottom5">
+						<div class="label1">
+							用户名
+						</div>
+					</div>
+					<div class="clear span-11 inline append-bottom10">
+						<div class="relative">
+							<input id="userName" name="userName" class="locDefaultStrContainer input1 validate[required, custom[onlyLetterNumberUnderLineDot], minSize[6], maxSize[15]]" value="{$smarty.post.userName|default:''}" type="text" />
+							<div class="locDefaultStr defaultStr1 locUserNameDefaultStr">
+								请输入用户名
+							</div>
+						</div>
+					</div>
+					<div class="clear append-bottom5">
+						<div class="label1">
+							密码
+						</div>
+					</div>
+					<div class="clear span-11 inline append-bottom20">
+						<div class="relative">
+							<input id="password" name="password" class="locDefaultStrContainer input1 validate[required, custom[onlyLetterNumber], minSize[6], maxSize[20]]" type="password" />
+							<div class="locDefaultStr defaultStr1 locUserNameDefaultStr">
+								请输入密码
+							</div>
+						</div>
+					</div>
+					<div class="clear span-6">
+						<a class="line1" href="{site_url('visitorMain/noLogin_index')}">先进去看看</a>
+					</div>
+					<div class="clear append-bottom5">
+						<div class="span-6 label1">
+							请选择您的身份
+						</div>
+					</div>
+					<div class="clear append-bottom20 locUserType">
+						<div class="span-15 label1">
+							{html_radios name='type' values=$typeId output=$typeName labels=FALSE selected=$type|default:1}
+						</div>
+					</div>
+					<div class="clearÏ">
+						<div class="inline span-3">
+							<button id="loginButton" class="button1" type="submit">
+								登录
+							</button>
+						</div>
+						<div class="span-10 locGeneralErrorInfo">
+							<span class="error1">{$loginErrorInfo|default:''}</span>
+						</div>
+					</div>
+				</form>
 			</div>
-			<form id="locLoginForm" action="{site_url('login/validateLogin')}" method="post">
-				<div class="clear prepend-19 append-bottom5">
-					<div class="label1">
-						用户名
-					</div>
+			<div class="prepend-1 span-43 last">
+				<p style="margin: 0px; text-align: justify; font-size: 14px; font-family: SimSun; ">
+					<span style="letter-spacing: 0.0px"><b>如何购买用户帐号</b></span>
+				</p>
+				<ol>
+					<li style="margin: 0px; text-align: justify; font-size: 14px; font-family: SimSun; ">
+						</span><span style="letter-spacing: 0.0px">需要购买“华钦知识库”网站账户的企业或个人，请联系华钦软件技术咨询服务部（Technical and Consulting Services），并告知需要购买的账户数量和积分数量，以及所选的计费方式。联系方式如下：</span>
+						<p style="margin: 0px 0px 0px 42.1px; text-align: justify; font-size: 14px; font-family: SimSun; color: rgb(1, 112, 192); ">
+							<span style="letter-spacing: 0.0px">技术咨询服务部负责人：何耀威（Filip Ho）</span>
+						</p>
+						<p style="margin: 0px 0px 0px 42.1px; text-align: justify; font-size: 14px; font-family: SimSun; color: rgb(1, 112, 192); ">
+							<span style="letter-spacing: 0.0px">邮箱：filip.ho@clps.com.cn</span>
+						</p>
+						<p style="margin: 0px 0px 0px 42.1px; text-align: justify; font-size: 14px; font-family: SimSun; color: rgb(1, 112, 192); ">
+							<span style="letter-spacing: 0.0px">电话：86 21 31268010&nbsp;分机：6111</span>
+						</p>
+					</li>
+					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
+						<span style="letter-spacing: 0.0px">申请入会，年费300元，可以阅读已经购买网站中所有的课程， 并可以查询预览网站中所有未购买的课程，有效期1年。</span>
+					</li>
+					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
+						<span style="letter-spacing: 0.0px">购买积分：1元/分，客户可根据需要使用积分在网站中购买课程。积分本身无有效期，但已购买课程的有效期为1年(注意：无论何种计费方式，每个账户都只供一名用户使用，不得转借他人)。</span>
+					</li>
+					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
+						<span style="letter-spacing: 0.0px">如需购买（包括首次购买），请根据第1项，联系公司技术服务部，签订合同，购买积分。</span>
+					</li>
+					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
+						<span style="letter-spacing: 0.0px">合同签订完成后，&nbsp;技术咨询服务部将为客户开立所需的网站账户并预存相应的积分。相关账户号和初始密码将通过加密邮件的方式发送至客户方指定的联系人。</span>
+					</li>
+					<li style="margin: 0px; text-align: justify; font-size: 14px; font-family: SimSun; ">
+						<span style="letter-spacing: 0.0px">客户收到账户号后即可开始使用，并需在收到帐号后的15个工作日内将合同中约定的购买款项转入华钦软件指定的银行账户中。</span>
+					</li>
+				</ol>
+				<p style="margin: 0px; text-align: justify; font-size: 14px; font-family: 'Times New Roman'; ">
+					<span style="letter-spacing: 0.0px">&nbsp;</span>
+				</p>
+				<div>
+					<span style="letter-spacing: 0.0px">
+						<br>
+					</span>
 				</div>
-				<div class="clear prepend-19 span-11 inline append-bottom10">
-					<div class="relative">
-						<input id="userName" name="userName" class="locDefaultStrContainer input1 validate[required, custom[onlyLetterNumberUnderLineDot], minSize[6], maxSize[15]]" value="{$smarty.post.userName|default:''}" type="text" />
-						<div class="locDefaultStr defaultStr1 locUserNameDefaultStr">
-							请输入用户名
-						</div>
-					</div>
-				</div>
-				<div class="clear prepend-19 append-bottom5">
-					<div class="label1">
-						密码
-					</div>
-				</div>
-				<div class="clear prepend-19 span-11 inline append-bottom20">
-					<div class="relative">
-						<input id="password" name="password" class="locDefaultStrContainer input1 validate[required, custom[onlyLetterNumber], minSize[6], maxSize[20]]" type="password" />
-						<div class="locDefaultStr defaultStr1 locUserNameDefaultStr">
-							请输入密码
-						</div>
-					</div>
-				</div>
-				<div class="clear prepend-19 span-6">
-					<a class="line1" href="{site_url('visitorMain/noLogin_index')}">先进去看看</a>
-				</div>
-				<div class="clear prepend-19 append-bottom5">
-					<div class="span-6 label1">
-						请选择您的身份
-					</div>
-				</div>
-				<div class="clear prepend-19 append-bottom20 locUserType">
-					<div class="span-15 label1">
-						{html_radios name='type' values=$typeId output=$typeName labels=FALSE selected=$type|default:1}
-					</div>
-				</div>
-				<div class="clear prepend-19">
-					<div class="inline span-3">
-						<button id="loginButton" class="button1" type="submit">
-							登录
-						</button>
-					</div>
-					<div class="span-10 locGeneralErrorInfo">
-						<span class="error1">{$loginErrorInfo|default:''}</span>
-					</div>
-				</div>
-			</form>
-			<hr>
-			<div>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><b><span style="font-size: 10.5pt; ">如何购买用户帐号</span></b></span><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; "></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">1.</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 7pt; font-family: 'Times New Roman', serif; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">需要购买“华钦知识库”网站账户的企业或个人，请联系华钦软件<b>技术咨询服务部（</b></span></span><span class="cldnh1"><b><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">Technical and Consulting Services</span></b></span><span class="cldnh1"><b><span style="font-size: 10.5pt; ">）</span></b></span><span class="cldnh1"><span style="font-size: 10.5pt; ">，并告知需要购买的账户数量和积分数量，以及所选的计费方式。联系方式如下：</span></span><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; "></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span style="font-size: 10.5pt; color: rgb(0, 112, 192); ">技术咨询服务部负责人：何耀威（</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; color: rgb(0, 112, 192); ">Filip Ho</span></span><span class="cldnh1"><span style="font-size: 10.5pt; color: rgb(0, 112, 192); ">）</span></span><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; "></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span style="font-size: 10.5pt; color: rgb(0, 112, 192); ">邮箱：</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; color: rgb(0, 112, 192); "><a href="mailto:filip.ho@clps.com.cn" style="color: purple; "><span style="color: rgb(0, 112, 192); ">filip.ho@clps.com.cn</span></a></span></span><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; "></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span style="font-size: 10.5pt; color: rgb(0, 112, 192); ">电话：</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; color: rgb(0, 112, 192); ">86 21 31268010&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; color: rgb(0, 112, 192); ">分机：</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; color: rgb(0, 112, 192); ">6111</span></span><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; "></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-					<span lang="EN-US">&nbsp;</span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-					<span lang="EN-US">2.&nbsp;</span>申请入会，年费<span lang="EN-US">300</span>元，<span class="apple-style-span"><span style="font-size: 10.5pt; ">可以阅读已经购买网站中所有的课程， 并</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">可以查询预览网站中所有未购买的课程，有效期</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">1</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">年。<span lang="EN-US"></span></span></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-					<span lang="EN-US">&nbsp;</span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-					<span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; ">3.&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">购买积分：</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">1</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">元</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">/</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">分，客户可根据需要使用积分在网站中购买课程。积分本身无有效期，但已购买课程的有效期为</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">1</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">年；<span lang="EN-US"></span></span></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; text-indent: 21pt; ">
-					<span class="cldnh1"><span style="font-size: 10.5pt; ">注意：无论何种计费方式，每个账户都只供一名用户使用，不得转借他人。<span lang="EN-US"></span></span></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; text-indent: 21pt; ">
-					<span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">&nbsp;</span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">3.</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 7pt; font-family: 'Times New Roman', serif; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">如需购买（包括首次购买），请根据第<span lang="EN-US">1</span>项，联系公司技术服务部，签订合同，购买积分。<span lang="EN-US"></span></span></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">&nbsp;</span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">4.</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 7pt; font-family: 'Times New Roman', serif; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">合同签订完成后，</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">技术咨询服务部将为客户开立所需的网站账户并预存相应的积分。相关账户号和初始密码将通过加密邮件的方式发送至客户方指定的联系人。<span lang="EN-US"></span></span></span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">&nbsp;</span>
-				</p>
-				<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
-					<span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">5.</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 7pt; font-family: 'Times New Roman', serif; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">客户收到账户号后即可开始使用，并需在收到帐号后的</span></span><span class="cldnh1"><span lang="EN-US" style="font-size: 10.5pt; font-family: Calibri, sans-serif; ">15</span></span><span class="cldnh1"><span style="font-size: 10.5pt; ">个工作日内将合同中约定的购买款项转入华钦软件指定的银行账户中。</span></span>
-				</p>
 			</div>
 		</div>
 	</body>
