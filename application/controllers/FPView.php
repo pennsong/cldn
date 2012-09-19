@@ -10,20 +10,14 @@ class FPView extends CW_Controller
 		$this->load->helper('fp_common');
 	}
 
-	public function noLogin_preview($course)
+	private function _getTotalPages($course)
 	{
 		$tmpRes = $this->db->query("SELECT path FROM course WHERE id=?", array($course));
 		if ($tmpRes->num_rows() > 0)
 		{
 			$doc = $tmpRes->first_row()->path;
 			$numPages = getTotalPages($this->fp_config->getConfig('path.pdf').$doc);
-			if ($numPages >= 3)
-			{
-				$numPages = 3;
-			}
-			$this->smarty->assign('course', $course);
-			$this->smarty->assign('numPages', $numPages);
-			$this->smarty->display('fpView.tpl');
+			return $numPages;
 		}
 		else
 		{
@@ -31,21 +25,18 @@ class FPView extends CW_Controller
 		}
 	}
 
+	public function noLogin_preview($course)
+	{
+		$this->smarty->assign('course', $course);
+		$this->smarty->assign('numPages', $this->_getTotalPages($course));
+		$this->smarty->display('fpView.tpl');
+	}
+
 	public function viewAll($course)
 	{
-		$tmpRes = $this->db->query("SELECT path FROM course WHERE id=?", array($course));
-		if ($tmpRes->num_rows() > 0)
-		{
-			$doc = $tmpRes->first_row()->path;
-			$numPages = getTotalPages($this->fp_config->getConfig('path.pdf').$doc);
-			$this->smarty->assign('course', $course);
-			$this->smarty->assign('numPages', $numPages);
-			$this->smarty->display('fpView.tpl');
-		}
-		else
-		{
-			show_error('无此课程!');
-		}
+		$this->smarty->assign('course', $course);
+		$this->smarty->assign('numPages', $this->_getTotalPages($course));
+		$this->smarty->display('fpView.tpl');
 	}
 
 	public function noLogin_checkAccessRight($course)
@@ -78,7 +69,7 @@ class FPView extends CW_Controller
 	public function noLogin_view($course, $page)
 	{
 		//检查阅读权限
-		if ($page <= 3 || $this->noLogin_checkAccessRight($course))
+		if ($page <= 5 || $this->noLogin_checkAccessRight($course))
 		{
 			$tmpRes = $this->db->query("SELECT path FROM course WHERE id=?", array($course));
 			if ($tmpRes->num_rows() > 0)
