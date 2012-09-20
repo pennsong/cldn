@@ -336,6 +336,18 @@ class Login extends CW_Controller
 		}
 	}
 
+	public function getNoticeTitle()
+	{
+		//取得通知标题
+		$noticeTitle = '无通知';
+		$tmpRes = $this->db->query("SELECT * FROM notice");
+		if ($tmpRes)
+		{
+			$noticTitle = $tmpRes->first_row()->title;
+		}
+		echo $noticeTitle;
+	}
+
 }
 
 /*end*/
