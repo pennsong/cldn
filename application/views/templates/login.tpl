@@ -149,46 +149,48 @@
 				</form>
 			</div>
 			<div class="prepend-1 span-43 last">
-				<p style="margin: 0px; text-align: justify; font-size: 14px; font-family: SimSun; ">
-					<span style="letter-spacing: 0.0px"><b>如何购买用户帐号</b></span>
-				</p>
-				<ol>
-					<li style="margin: 0px; text-align: justify; font-size: 14px; font-family: SimSun; ">
-						</span><span style="letter-spacing: 0.0px">需要购买“华钦知识库”网站账户的企业或个人，请联系华钦软件技术咨询服务部（Technical and Consulting Services），并告知需要购买的账户数量和积分数量，以及所选的计费方式。联系方式如下：</span>
-						<p style="margin: 0px 0px 0px 42.1px; text-align: justify; font-size: 14px; font-family: SimSun; color: rgb(1, 112, 192); ">
-							<span style="letter-spacing: 0.0px">技术咨询服务部负责人：何耀威（Filip Ho）</span>
-						</p>
-						<p style="margin: 0px 0px 0px 42.1px; text-align: justify; font-size: 14px; font-family: SimSun; color: rgb(1, 112, 192); ">
-							<span style="letter-spacing: 0.0px">邮箱：filip.ho@clps.com.cn</span>
-						</p>
-						<p style="margin: 0px 0px 0px 42.1px; text-align: justify; font-size: 14px; font-family: SimSun; color: rgb(1, 112, 192); ">
-							<span style="letter-spacing: 0.0px">电话：86 21 31268010&nbsp;分机：6111</span>
-						</p>
-					</li>
-					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
-						<span style="letter-spacing: 0.0px">申请入会，年费300元，可以阅读已经购买网站中所有的课程， 并可以查询预览网站中所有未购买的课程，有效期1年。</span>
-					</li>
-					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
-						<span style="letter-spacing: 0.0px">购买积分：1元/分，客户可根据需要使用积分在网站中购买课程。积分本身无有效期，但已购买课程的有效期为1年(注意：无论何种计费方式，每个账户都只供一名用户使用，不得转借他人)。</span>
-					</li>
-					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
-						<span style="letter-spacing: 0.0px">如需购买（包括首次购买），请根据第1项，联系公司技术服务部，签订合同，购买积分。</span>
-					</li>
-					<li style="margin: 0px; font-size: 14px; font-family: SimSun; ">
-						<span style="letter-spacing: 0.0px">合同签订完成后，&nbsp;技术咨询服务部将为客户开立所需的网站账户并预存相应的积分。相关账户号和初始密码将通过加密邮件的方式发送至客户方指定的联系人。</span>
-					</li>
-					<li style="margin: 0px; text-align: justify; font-size: 14px; font-family: SimSun; ">
-						<span style="letter-spacing: 0.0px">客户收到账户号后即可开始使用，并需在收到帐号后的15个工作日内将合同中约定的购买款项转入华钦软件指定的银行账户中。</span>
+				<div style="font-family: Helvetica; ">
+					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<b><span style="font-size: 10pt; ">如何申请购买网站账户</span></b><span lang="EN-US"></span>
+					</p>
+				</div>
+				<ol start="1" type="1" style="margin-bottom: 0cm; font-family: Helvetica; margin-top: 0cm; ">
+					<li class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
+						<span style="font-size: 10pt; ">需要购买“华钦知识库”网站账户的企业或个人，请联系华钦软件技术咨询服务部（<span lang="EN-US">Technical and Consulting Services</span>），联系方式如下：</span><span lang="EN-US"></span>
 					</li>
 				</ol>
-				<p style="margin: 0px; text-align: justify; font-size: 14px; font-family: 'Times New Roman'; ">
-					<span style="letter-spacing: 0.0px">&nbsp;</span>
-				</p>
-				<div>
-					<span style="letter-spacing: 0.0px">
-						<br>
-					</span>
+				<div style="font-family: Helvetica; margin-left: 66pt; ">
+					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">华钦软件技术咨询服务部负责人：何耀威（<span lang="EN-US">Filip Ho</span>）</span><span lang="EN-US"></span>
+					</p>
 				</div>
+				<div style="font-family: Helvetica; margin-left: 66pt; ">
+					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">邮箱：<span lang="EN-US"><a href="mailto:filip.ho@clps.com.cn" style="color: purple; ">filip.ho@clps.com.cn</a></span></span><span lang="EN-US"></span>
+					</p>
+				</div>
+				<div style="font-family: Helvetica; margin-left: 66pt; ">
+					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">电话：<span lang="EN-US">86 21 31268010<span class="apple-converted-space">&nbsp;</span></span>分机：<span lang="EN-US">6111</span></span><span lang="EN-US"></span>
+					</p>
+				</div>
+				<ol start="2" type="1" style="margin-bottom: 0cm; font-family: Helvetica; margin-top: 0cm; ">
+					<li class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; ">购买积分<b>：</b><span lang="EN-US">1</span>元<span lang="EN-US">/</span>分，可供用户在网站中购买课程，已购买课程的有效期为<span lang="EN-US">1</span>年。</span><span lang="EN-US"></span>
+					</li>
+					<li class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; ">年费会员<b>：</b>账户的有效期为一年，在有效期内，年费会员可以阅读网站中所有的课程（具体费用请咨询华钦软件技术咨询服务部）。</span><span lang="EN-US"></span>
+					</li>
+					<li class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; ">双方在协商确定计费方式、购买数量和价格后签订购买合同。</span><span lang="EN-US"></span>
+					</li>
+					<li class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
+						<span style="font-size: 10pt; ">合同签订完成后， 技术咨询服务部将为客户开立所需的网站账户并预存相应的积分。相关账户号和初始密码将通过加密邮件的方式发送至客户方指定的联系人。</span><span lang="EN-US"></span>
+					</li>
+					<li class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; text-align: justify; ">
+						<span style="font-size: 10pt; ">客户收到账户号后即可开始使用，并需在收到帐号后的<span lang="EN-US">15</span>个工作日内将合同中约定的购买款项转入华钦软件指定的银行账户中。</span>
+					</li>
+				</ol>
 			</div>
 		</div>
 	</body>

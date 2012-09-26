@@ -107,7 +107,9 @@
 		$("#openAll").click(function(event)
 		{
 			event.preventDefault();
-			nodeOpen($(".draw"));
+			nodeOpen($(".level1"));
+			nodeOpen($(".level2"));
+			nodeClose($(".level3"));
 		});
 		$("#closeAll").click(function(event)
 		{
