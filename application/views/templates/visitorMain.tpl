@@ -107,9 +107,7 @@
 		$("#openAll").click(function(event)
 		{
 			event.preventDefault();
-			nodeOpen($(".level1"));
-			nodeOpen($(".level2"));
-			nodeClose($(".level3"));
+			nodeOpen($(".draw"));
 		});
 		$("#closeAll").click(function(event)
 		{
@@ -138,7 +136,7 @@
 				<a class="{if $sortType=='area'} currentMenu {else} {/if}" href="{site_url('visitorMain/noLogin_index/area')}">按板块分类</a>
 			</li>
 			<li>
-				<a class="{if $sortType=='mark'} currentMenu {else} {/if}" href="{site_url('visitorMain/noLogin_index/mark')}">按标签分类</a>
+				<a class="{if $sortType=='mark'} currentMenu {else} {/if}" href="{site_url('visitorMain/noLogin_index/mark')}">按等级分类</a>
 			</li>
 		</ul>
 	</div>
@@ -176,11 +174,8 @@
 				</div>
 				{foreach $area['markArray'] as $mark}
 				<div class="prepend-1 span-35 expand">
-					<div class="draw level3">
-						<img class="close" src='{base_url()}resource/img/open.png' />{$mark['name']}
-					</div>
 					{foreach $mark['courseList'] as $course}
-					<div class="prepend-1 span-34 expand {cycle values='odd,even'}">
+					<div class="prepend-1 span-34 {cycle values='odd,even'}">
 						<div class="span-23">
 							<a class="normal" href="{site_url('login/detail')}/{$course['id']}" target="_blank">{$course['name']}</a>
 						</div>
