@@ -161,17 +161,17 @@
 				</ol>
 				<div style="font-family: Helvetica; margin-left: 66pt; ">
 					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">华钦软件技术咨询服务部负责人：何耀威（<span lang="EN-US">Filip Ho</span>）</span><span lang="EN-US"></span>
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">华钦软件技术咨询服务部负责人：胡晓鸣（<span lang="EN-US">Shawn Hu</span>）</span><span lang="EN-US"></span>
 					</p>
 				</div>
 				<div style="font-family: Helvetica; margin-left: 66pt; ">
 					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">邮箱：<span lang="EN-US"><a href="mailto:filip.ho@clps.com.cn" style="color: purple; ">filip.ho@clps.com.cn</a></span></span><span lang="EN-US"></span>
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">邮箱：<span lang="EN-US"><a href="mailto:shawn.hu@clps.com.cn" style="color: purple; ">shawn.hu@clps.com.cn</a></span></span><span lang="EN-US"></span>
 					</p>
 				</div>
 				<div style="font-family: Helvetica; margin-left: 66pt; ">
 					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">电话：<span lang="EN-US">86 21 31268010<span class="apple-converted-space">&nbsp;</span></span>分机：<span lang="EN-US">6111</span></span><span lang="EN-US"></span>
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">电话：<span lang="EN-US">86 21 31268010<span class="apple-converted-space">&nbsp;</span></span>分机：<span lang="EN-US">6115</span></span><span lang="EN-US"></span>
 					</p>
 				</div>
 				<ol start="2" type="1" style="margin-bottom: 0cm; font-family: Helvetica; margin-top: 0cm; ">
