@@ -148,7 +148,7 @@
 		{$msg|default:""}
 	</div>
 	<div class="span-38 last">
-		<span class="red">*本网站主要提供通用的业务和技术培训课程，如需根据贵公司的实际业务定制专门的培训课程，请联系华钦软件技术咨询服务部（负责人：何耀威， 邮箱：<a href="mailto:filip.ho@clps.com.cn">filip.ho@clps.com.cn</a>）</span>
+		<span class="red">*本网站主要提供通用的业务和技术培训课程，如需根据贵公司的实际业务定制专门的培训课程，请联系华钦软件技术咨询服务部（负责人：Jenson Xu， 邮箱：<a href="mailto:jenson@clps.com.cn">jenson@clps.com.cn</a>）电话：86 21 31268010 分机：6898</span>
 	</div>
 	<div class="span-38">
 		<span class="cldnH1">培训课程:</span>
