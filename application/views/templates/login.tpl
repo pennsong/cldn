@@ -171,7 +171,7 @@
 				</div>
 				<div style="font-family: Helvetica; margin-left: 66pt; ">
 					<p class="MsoNormal" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 宋体; ">
-						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">电话：<span lang="EN-US">86 21 31268010<span class="apple-converted-space">&nbsp;</span></span>分机：<span lang="EN-US">6898</span></span><span lang="EN-US"></span>
+						<span style="font-size: 10pt; color: rgb(1, 112, 192); ">电话：<span lang="EN-US">86 21 31268010<span class="apple-converted-space">&nbsp;</span></span>分机：<span lang="EN-US">6298</span></span><span lang="EN-US"></span>
 					</p>
 				</div>
 				<ol start="2" type="1" style="margin-bottom: 0cm; font-family: Helvetica; margin-top: 0cm; ">
